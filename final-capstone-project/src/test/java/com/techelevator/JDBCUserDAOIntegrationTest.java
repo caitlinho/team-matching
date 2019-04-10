@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.techelevator.model.JDBCInstructorClassesDAO;
 import com.techelevator.model.JDBCUserDAO;
 
-public class JDBCUserDAOIntegrationTest extends  {
+public class JDBCUserDAOIntegrationTest   {
 	
 	private JdbcTemplate jdbctemplate;
 	private JDBCUserDAO dao;
