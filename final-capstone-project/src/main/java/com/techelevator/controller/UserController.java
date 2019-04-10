@@ -43,9 +43,4 @@ public class UserController {
 		userDAO.saveUser(user.getUserName(), user.getPassword());
 		return "redirect:/login";
 	}
-	
-//	@RequestMapping(path="/dashboard", method=RequestMethod.GET)
-//	public String viewDashboard()
-//	
-//	
 }

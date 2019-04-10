@@ -3,9 +3,12 @@
 <c:import url="/WEB-INF/jsp/navbar" />
 
 <div class="body">
-	<h1>${classname CHANGE THIS} Students</h1>
+	<h1>Students</h1>
 	
-	<button>Add Student</button>
+	<div class="studentNav">
+		<c:url var="uploadStudents" value="/users/{username}/{classId}/upload" />
+		<a href="${uploadStudents}">Upload Student List (.csv file)</a>
+	</div>
 	
 	<table class="students">
 		<tr>
@@ -27,7 +30,12 @@
 					<c:out value="${forEachVariable.comments}" />
 				</td>
 				<td>
-					<c:out value="${forEachVariable.active}" />
+					<c:if test="${forEachVariable.active} == true"> {
+						<c:out value="Active" />
+					</c:if>
+					<c:if test="${forEachVariable.active} == false"> {
+						<c:out value="Inactive" />
+					</c:if>
 				</td>
 			</tr>
 		<!-- for loop ends -->
