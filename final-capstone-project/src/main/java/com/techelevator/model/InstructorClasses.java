@@ -1,8 +1,12 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.NotNull;
+
 public class InstructorClasses {
 	
 	private int classId;
+	
+	@NotNull
 	private String name;
 	
 	public int getClassId() {

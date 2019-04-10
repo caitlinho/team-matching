@@ -18,19 +18,19 @@ private JdbcTemplate jdbcTemplate;
 	}
 
 	@Override
-	public Instructor getInstructorById(User user) {
-		Instructor instructor = new Instructor();
+	public String getInstructorById(String userName) {
+		String instructorId = new String();
 		String sqlGetInstructorById = "SELECT instructor_id FROM instructor "
 				+ "						JOIN app_user_instructor ON app_user_instructor.instructor_id"
 				+ "						= instructor.instuctor_id	"
 				+ "						JOIN app_user ON app_user.id = app_user_instructor.id"
-				+ "						WHERE app_user.id = ? ";
-		 jdbcTemplate.queryForRowSet(sqlGetInstructorById, user);
+				+ "						WHERE app_user.user_name = ? ";
+		 jdbcTemplate.queryForRowSet(sqlGetInstructorById, userName);
 		
-		 return instructor;
-		}
-		
+		 return instructorId;
 	}
+		
+}
 
 
 
