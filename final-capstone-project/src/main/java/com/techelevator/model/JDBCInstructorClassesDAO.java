@@ -28,7 +28,7 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 	}
 
 	@Override
-	public List<InstructorClasses> viewClasses(int instructorId) {
+	public List<InstructorClasses> viewClasses(String instructorId) {
 		List<InstructorClasses> classList =  new ArrayList<>();
 		String sqlSelectAllClasses = "SELECT class.name FROM class "
 									+ "JOIN instructor_class ON instructor_class.class_id"
