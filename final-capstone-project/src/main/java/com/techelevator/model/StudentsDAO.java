@@ -3,6 +3,6 @@ package com.techelevator.model;
 public interface StudentsDAO {
 	
 	void addStudentList();
-	Students editStudent();
+	Students editStudent(Students student);
 
 }
