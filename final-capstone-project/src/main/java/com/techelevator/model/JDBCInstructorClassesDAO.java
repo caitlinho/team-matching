@@ -23,7 +23,7 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 
 	@Override
 	public void addClass(InstructorClasses newClass) {
-		String sqlToAddClass = "INSERT INTO class (id,name) VALUES (default, ?)";
+		String sqlToAddClass = "INSERT INTO class (class_id,name) VALUES (default, ?)";
 		jdbcTemplate.update(sqlToAddClass, newClass.getName());	
 	}
 
@@ -34,7 +34,7 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 									+ "JOIN instructor_class ON instructor_class.class_id"
 									+ "= class.class_id "
 									+ "JOIN instructor ON instructor.instructor_id = instructor_class.instructor_id"
-									+ "WHERE instructor_id = ? ORDER BY ASC";
+									+ "WHERE instructor_class.instructor_id = ? ORDER BY class.name ASC";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllClasses, instructorId);
 		while(results.next()) {
 			InstructorClasses c = mapRowToClass(results);
