@@ -1,0 +1,30 @@
+
+/*login*/
+	/* */
+
+.center {
+	display: block;
+	width: 35%;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid grey;
+    text-align: center;
+    border-radius: 12px;
+    margin-top: 17%;
+}
+
+.btn {
+	padding: 6px 14px;
+	border-radius: 12px;
+	box-shadow: 0 4px 2px 0 rgba(99, 99, 99, .5);
+	transition: all .2s ease-in-out;
+	background-color: grey;
+}
+
+.btn:hover {
+	background-color: #ff2590;
+}
+
+.form-group {
+	padding: 5px;
+}
