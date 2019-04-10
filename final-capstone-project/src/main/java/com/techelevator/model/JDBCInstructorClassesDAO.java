@@ -5,34 +5,31 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-<<<<<<< HEAD
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 @Component
->>>>>>> 0640c435d7e0794d100001c0ab1a7c28f4cf46df
-public class JDBCClassDAO implements ClassDAO{
+public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 	
 	private JdbcTemplate jdbcTemplate;
 	
 	@Autowired
-	public JDBCClassDAO(DataSource dataSource) {
+	public JDBCInstructorClassesDAO(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
 
 	@Override
-	public void addClass(Class newClass) {
+	public void addClass(InstructorClasses newClass) {
 		String sqlToAddClass = "INSERT INTO class (id,name) VALUES (default, ?)";
 		jdbcTemplate.update(sqlToAddClass, newClass.getName());	
 	}
 
 	@Override
-	public List<Class> viewClasses(int instructorId) {
-		List<Class> classList =  new ArrayList<>();
+	public List<InstructorClasses> viewClasses(int instructorId) {
+		List<InstructorClasses> classList =  new ArrayList<>();
 		String sqlSelectAllClasses = "SELECT * FROM class "
 									+ "JOIN instructor_class ON instructor_class.class_id"
 									+ "= class.class_id "
@@ -40,15 +37,15 @@ public class JDBCClassDAO implements ClassDAO{
 									+ "WHERE instructor_id = ? ORDER BY ASC";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllClasses, instructorId);
 		while(results.next()) {
-			Class c = mapRowToClass(results);
+			InstructorClasses c = mapRowToClass(results);
 			classList.add(c);
 		}
 		return classList;
 	}
 
-	private Class mapRowToClass(SqlRowSet results) {
+	private InstructorClasses mapRowToClass(SqlRowSet results) {
 		
-		Class c = new Class();
+		InstructorClasses c = new InstructorClasses();
 		c.setClassId(results.getInt("class_id"));
 		c.setName(results.getString("name"));
 		
