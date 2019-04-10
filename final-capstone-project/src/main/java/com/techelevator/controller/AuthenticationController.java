@@ -43,7 +43,7 @@ public class AuthenticationController {
 		return "login";
 	}
 	
-	@RequestMapping(path="/login", method=RequestMethod.POST)
+	@RequestMapping(path="/", method=RequestMethod.POST)
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
 						HttpSession session) {
@@ -51,12 +51,12 @@ public class AuthenticationController {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
 			return "redirect:/users/"+userName+"/dashboard";	
 		} else {
-			return "redirect:/login";
+			return "redirect:/";
 		}
 	}
 	
 	@RequestMapping(path="/users/{userName}/dashboard", method=RequestMethod.GET)
-	public String viewDashboard(@PathVariable String userName, ModelMap map, HttpSession session) {
+	public String viewDashboard(@PathVariable final String userName, ModelMap map, HttpSession session) {
 		map.addAttribute("allClasses", instructorClassesDAO.viewClasses(instructorDAO.getInstructorById(userName)));
 
 		return "dashboard";	
