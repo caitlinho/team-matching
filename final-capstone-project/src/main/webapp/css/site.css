@@ -2,15 +2,17 @@
 /*login*/
 	/* */
 
-.center {
-	display: block;
-	width: 35%;
-	margin-left: auto;
-	margin-right: auto;
-	border: 1px solid grey;
-    text-align: center;
+.login {
+	top: 50%;
+    left: 50%;
+    position: absolute;
+    width: 320px;
+    transform: translate(-50%, -50%);
     border-radius: 12px;
-    margin-top: 17%;
+}
+
+h2 {
+	text-align: center;
 }
 
 .btn {
@@ -19,6 +21,11 @@
 	box-shadow: 0 4px 2px 0 rgba(99, 99, 99, .5);
 	transition: all .2s ease-in-out;
 	background-color: grey;
+	margin-top: 5px;
+	align-items: center;
+	margin-left: 35%;
+    margin-top: 10px;
+	
 }
 
 .btn:hover {
@@ -27,4 +34,13 @@
 
 .form-group {
 	padding: 5px;
+	width: 100%;
+	overflow: hidden;
+	font-size: 20px;
+	border-bottom: 1px solid grey;
+	text-align: left;
+}
+
+.form-control {
+	border: none;
 }
