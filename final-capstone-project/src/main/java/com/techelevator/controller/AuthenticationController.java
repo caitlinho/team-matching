@@ -43,7 +43,7 @@ public class AuthenticationController {
 		return "login";
 	}
 	
-	@RequestMapping(path="/login", method=RequestMethod.POST)
+	@RequestMapping(path="/", method=RequestMethod.POST)
 	public String login(@RequestParam String userName, 
 						@RequestParam String password, 
 						HttpSession session) {
@@ -55,12 +55,12 @@ public class AuthenticationController {
 		}
 	}
 	
-	@RequestMapping(path="/users/{userName}/dashboard", method=RequestMethod.GET)
-	public String viewDashboard(@PathVariable String userName, ModelMap map, HttpSession session) {
-		map.addAttribute("allClasses", instructorClassesDAO.viewClasses(instructorDAO.getInstructorById(userName)));
-
-		return "dashboard";	
-	}
+//	@RequestMapping(path="/users/{userName}/dashboard", method=RequestMethod.GET)
+//	public String viewDashboard(@PathVariable final String userName, ModelMap map, HttpSession session) {
+//		map.addAttribute("allClasses", instructorClassesDAO.viewClasses(instructorDAO.getInstructorById(userName)));
+//
+//		return "dashboard";	
+//	}
 	
 	@RequestMapping(path="/users/{userName}/addClass", method=RequestMethod.GET)
 	public String displayAddClassForm(@PathVariable String userName) {
