@@ -7,7 +7,7 @@
 <div class="body">
 	
 	<c:url var="addClassURL" value="/user/{username}/addClass" />
-	<form action="addClassURL" method="POST" modelAttribute="addClass">
+	<form action="${addClassURL}" method="POST" modelAttribute="addClass">
 		<c:out value="Class Name" />
 		<input type="text" name="className">
 		<button type="submit" name="addClassSubmit">Submit</button>
