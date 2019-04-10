@@ -25,6 +25,7 @@ private JdbcTemplate jdbcTemplate;
 				+ "						= instructor.instuctor_id	"
 				+ "						JOIN app_user ON app_user.id = app_user_instructor.id"
 				+ "						WHERE app_user.user_name = ? ";
+
 		 jdbcTemplate.queryForRowSet(sqlGetInstructorById, userName);
 		
 		 return instructorId;

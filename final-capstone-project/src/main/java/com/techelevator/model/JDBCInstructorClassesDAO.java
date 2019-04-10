@@ -23,18 +23,18 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 
 	@Override
 	public void addClass(InstructorClasses newClass) {
-		String sqlToAddClass = "INSERT INTO class (id,name) VALUES (default, ?)";
+		String sqlToAddClass = "INSERT INTO class (class_id,name) VALUES (default, ?)";
 		jdbcTemplate.update(sqlToAddClass, newClass.getName());	
 	}
 
 	@Override
 	public List<InstructorClasses> viewClasses(String instructorId) {
 		List<InstructorClasses> classList =  new ArrayList<>();
-		String sqlSelectAllClasses = "SELECT * FROM class "
+		String sqlSelectAllClasses = "SELECT class.name FROM class "
 									+ "JOIN instructor_class ON instructor_class.class_id"
 									+ "= class.class_id "
-									+ "JOIN instructor ON instructor.instructor_id = instructor_class.instructor_id"
-									+ "WHERE instructor_id = ? ORDER BY ASC";
+									+ "JOIN instructor ON instructor.instructor_id = instructor_class.instructor_id "
+									+ "WHERE instructor_class.instructor_id = ? ORDER BY class.name ASC";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllClasses, instructorId);
 		while(results.next()) {
 			InstructorClasses c = mapRowToClass(results);

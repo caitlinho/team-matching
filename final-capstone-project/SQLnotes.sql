@@ -45,7 +45,7 @@ constraint fk_student_matches_student_id foreign key (student_id) references stu
 SELECT name FROM class ORDER BY ASC;
 
 //add a class
-INSERT INTO class (id, name) VALUES (DEFAULT, ?)
+INSERT INTO class (class_id, name) VALUES (DEFAULT, ?)
 
 //add instructor
 INSERT INTO instructor (id, name, password) VALUES (DEFAULT, ?, ?)
@@ -77,3 +77,19 @@ constraint fk_app_user_instructor_id foreign key (id) references app_user(id));
 
 
 DELETE FROM student;
+
+INSERT INTO instructor (instructor_id, name, password) VALUES (DEFAULT, 'Brian Lauvray', '!CodingRules1');
+INSERT INTO instructor_class (instructor_id, class_id) VALUES (1, 1);
+
+SELECT * FROM class 
+JOIN instructor_class ON instructor_class.class_id = class.class_id 
+JOIN instructor ON instructor.instructor_id = instructor_class.instructor_id
+WHERE instructor_class.instructor_id = ? ORDER BY class.name ASC;
+
+GRANT ALL ON instructor TO postgres;
+
+GRANT ALL ON class TO postgres;
+GRANT INSERT ON class to postgres;
+GRANT ALL ON matches TO postgres;
+GRANT ALL ON student TO postgres;
+GRANT ALL ON app_user TO postgres;
