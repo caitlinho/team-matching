@@ -5,6 +5,6 @@ import java.util.List;
 public interface InstructorClassesDAO {
 
 	void addClass(InstructorClasses newClass);
-	List<InstructorClasses> viewClasses(String instructorId);
+	List<InstructorClasses> viewClasses(int instructorId);
 	
 }

@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class JDBCStudentsDAO implements StudentsDAO{
 	public void addStudentList() {
 	String sqlToAddStudentsList = "COPY student (student_id, name, email, comments) FROM '/Users/gsutter/Development/capstone/final-capstone-team-bravo/studentList.csv' DELIMITERS ',' CSV header FORCE QUOTE *;\n"; 
 	jdbcTemplate.update(sqlToAddStudentsList);
+	 
 			
 	}
 

@@ -93,3 +93,7 @@ GRANT INSERT ON class to postgres;
 GRANT ALL ON matches TO postgres;
 GRANT ALL ON student TO postgres;
 GRANT ALL ON app_user TO postgres;
+
+SELECT * FROM app_user
+INSERT INTO app_user (id, user_name, password, role, salt) VALUES (DEFAULT, 'blauvray', '!CodingRules1', 'instructor')
+

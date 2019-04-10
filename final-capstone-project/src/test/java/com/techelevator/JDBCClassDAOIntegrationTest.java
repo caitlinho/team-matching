@@ -37,9 +37,6 @@ public class JDBCClassDAOIntegrationTest extends DAOIntegrationTest {
 	}
 	
 	
-
-	
-	
 	@Test
 	public void view_classes_returns_correct_number_of_classes() {
 		//Arrange
