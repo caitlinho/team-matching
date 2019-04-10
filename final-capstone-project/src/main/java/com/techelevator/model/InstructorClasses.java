@@ -1,6 +1,6 @@
 package com.techelevator.model;
 
-public class Class {
+public class InstructorClasses {
 	
 	private int classId;
 	private String name;
