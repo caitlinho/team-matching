@@ -1,16 +1,19 @@
 package com.techelevator.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class JDBCStudentsDAO implements StudentsDAO{
 
 	@Override
 	public void addStudentList() {
-		// TODO Auto-generated method stub
+//		String sqlToAddStudentToList = ""
 		
 	}
 
 	@Override
 	public Students editStudent() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

@@ -44,5 +44,8 @@ public class UserController {
 		return "redirect:/login";
 	}
 	
-	
+//	@RequestMapping(path="/dashboard", method=RequestMethod.GET)
+//	public String viewDashboard()
+//	
+//	
 }

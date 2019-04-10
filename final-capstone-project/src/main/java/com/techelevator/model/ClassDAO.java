@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ClassDAO {
 
-	void addClass();
-	List<Class> viewClasses();
+	void addClass(Class newClass);
+	List<Class> viewClasses(int instructorId);
 	
 }
