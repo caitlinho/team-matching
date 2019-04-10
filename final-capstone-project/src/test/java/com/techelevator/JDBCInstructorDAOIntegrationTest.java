@@ -8,11 +8,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.techelevator.model.Instructor;
 import com.techelevator.model.JDBCInstructorDAO;
+import com.techelevator.model.JDBCUserDAO;
 
 public class JDBCInstructorDAOIntegrationTest extends DAOIntegrationTest {
 	
 	private JDBCInstructorDAO dao;
 	private JdbcTemplate jdbcTemplate;
+	private JDBCUserDAO userDAO;
 	
 	@Before
 	public void setupTest() {
@@ -26,7 +28,7 @@ public class JDBCInstructorDAOIntegrationTest extends DAOIntegrationTest {
 		Instructor instructor = getExampleInstructor(1, "Brian Lauvray");
 
 		//Act
-		int actual = dao.getInstructorById(user);
+		int actual = dao.getInstructorById(userDAO.getUserByUserName("blauvray"));
 		
 		//Assert
 		assertEquals(1, actual);

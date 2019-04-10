@@ -51,7 +51,7 @@ public class AuthenticationController {
 			session.setAttribute("currentUser", userDAO.getUserByUserName(userName));
 			return "redirect:/users/"+userName+"/dashboard";	
 		} else {
-			return "redirect:/login";
+			return "redirect:/";
 		}
 	}
 	

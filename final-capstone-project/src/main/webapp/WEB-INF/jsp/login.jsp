@@ -34,7 +34,7 @@
 <div class="login">
 	<h2 >MATCHTASTIC!</h2>
 	<div>
-		<c:url var="formAction" value="/login" />
+		<c:url var="formAction" value="/" />
 		<form method="POST" action="${formAction}">
 		
 			<div class="form-group">
