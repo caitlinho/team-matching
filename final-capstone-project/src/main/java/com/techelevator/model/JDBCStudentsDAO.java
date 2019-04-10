@@ -26,9 +26,11 @@ public class JDBCStudentsDAO implements StudentsDAO{
 	}
 
 	@Override
-	public Students editStudent() {
+	public Students editStudent(Students student) {	
+		String sqlEditStudent = "UPDATE student SET name = ?, email = ?, comments = ? WHERE student_id = ?";
+		jdbcTemplate.update(sqlEditStudent, student.getStudentId());
 		
-		return null;
+		return student;
 	}
 
 }
