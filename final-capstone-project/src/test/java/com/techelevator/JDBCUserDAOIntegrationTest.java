@@ -18,5 +18,6 @@ public class JDBCUserDAOIntegrationTest extends DAOIntegrationTest {
 		dao = new JDBCUserDAO(getDataSource(), null);
 		jdbcTemplate = new JdbcTemplate(getDataSource());
 	}
-
+	
+	
 }

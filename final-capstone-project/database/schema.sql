@@ -58,4 +58,12 @@ match_id int not null,
 constraint fk_student_macthes_match_id foreign key (match_id) references matches(match_id),
 constraint fk_student_matches_student_id foreign key (student_id) references student(student_id));
 
+create table app_user_instructor
+(instructor_id int not null,
+id int not null,
+
+constraint fk_app_user_instructor_instructor_id foreign key (instructor_id) references instructor(instructor_id),
+constraint fk_app_user_instructor_id foreign key (id) references app_user(id));
+
+
 COMMIT;

@@ -2,6 +2,6 @@ package com.techelevator.model;
 
 public interface InstructorDAO {
 	
-	String getInstructorById(String userName);
+	int getInstructorById(String userName);
 
 }

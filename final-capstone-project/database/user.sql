@@ -10,7 +10,11 @@ TO capstone_owner;
 
 GRANT ALL 
 ON ALL SEQUENCES IN SCHEMA public
-TO capstone_owner; 
+TO capstone_owner;
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON ALL TABLES IN SCHEMA public
+TO capstone_owner;
 
 CREATE USER capstone_appuser WITH PASSWORD 'capstone_appuser1';
 
