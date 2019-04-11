@@ -28,12 +28,6 @@ public class AuthenticationController {
 	private UserDAO userDAO;
 	
 	@Autowired
-	private InstructorClassesDAO instructorClassesDAO;
-	
-	@Autowired
-	private InstructorDAO instructorDAO;
-
-	@Autowired
 	public AuthenticationController(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
@@ -53,31 +47,6 @@ public class AuthenticationController {
 		} else {
 			return "redirect:/";
 		}
-	}
-	
-	@RequestMapping(path="/users/{userName}/dashboard", method=RequestMethod.GET)
-	public String viewDashboard(@PathVariable final String userName, ModelMap map, HttpSession session) {
-		map.addAttribute("allClasses", instructorClassesDAO.viewClasses(instructorDAO.getInstructorById(userName)));
-
-		return "dashboard";	
-	}
-	
-	@RequestMapping(path="/users/{userName}/addClass", method=RequestMethod.GET)
-	public String displayAddClassForm(@PathVariable String userName) {
-		
-		return "addClass";
-	}
-	
-	@RequestMapping(path="/users/{userName}/addClass", method=RequestMethod.POST)
-	public String addClass(@PathVariable String userName, ModelMap map, @Valid @ModelAttribute("addClass") InstructorClasses newClass, BindingResult result) {
-		
-		if(result.hasErrors()) {
-			return "addClass";
-		}
-		
-		instructorClassesDAO.addClass(newClass);
-		
-		return "redirect:/users/{userName}/dashboard";
 	}
 
 	@RequestMapping(path="/logout", method=RequestMethod.POST)

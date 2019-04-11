@@ -5,7 +5,8 @@
 <div class="body">
 	<c:forEach items="${allClasses}" var="singleClass">
 		<div class="singleClass">
-			<c:out value="${singleClass.name}" />
+			<c:url var="classDetails" value="/users/{userName}/{classId}" />
+			<a href="${classDetails}">${singleClass.name}</a>
 		</div>
 	</c:forEach>
 	<form class="addClass">
