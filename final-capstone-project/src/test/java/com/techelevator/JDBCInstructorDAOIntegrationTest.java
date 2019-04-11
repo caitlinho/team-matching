@@ -71,9 +71,9 @@ public class JDBCInstructorDAOIntegrationTest extends DAOIntegrationTest {
 	}
 	
 	private void insertExampleInstructorIntoDatabase(Instructor instructor) {
-		String sql = "INSERT INTO instructor (instructor_id, name, password) " 
-					+ "VALUES (?,?,?)";
-		jdbcTemplate.update(sql, instructor.getId(), instructor.getName(), instructor.getPassword());
+		String sql = "INSERT INTO instructor (instructor_id, name) " 
+					+ "VALUES (?,?)";
+		jdbcTemplate.update(sql, instructor.getId(), instructor.getName());
 	}
 	
 	private void insertUserIntoDatabase(User user) {
