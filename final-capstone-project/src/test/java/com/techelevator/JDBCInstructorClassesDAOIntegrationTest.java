@@ -43,7 +43,7 @@ public class JDBCInstructorClassesDAOIntegrationTest extends DAOIntegrationTest 
 		InstructorClasses theClass0 = getNewClass(1, "JavaBlue");
 		InstructorClasses theClass1 = getNewClass(2, "JavaGreen");
 		
-		Instructor instructor = getExampleInstructor(1, "Brian Lauvray", "!CodingRules1");
+		Instructor instructor = getExampleInstructor(1, "Brian Lauvray");
 		
 		
 		//Act
@@ -65,8 +65,8 @@ public class JDBCInstructorClassesDAOIntegrationTest extends DAOIntegrationTest 
 		InstructorClasses theClass0 = getNewClass(1, "JavaBlue");
 		InstructorClasses theClass1 = getNewClass(2, "JavaGreen");
 		
-		Instructor instructor = getExampleInstructor(1, "Brian Lauvray", "!CodingRules1");
-		Instructor secondInstructor = getExampleInstructor(2, "Steve Carmichael", "!AbC23");
+		Instructor instructor = getExampleInstructor(1, "Brian Lauvray");
+		Instructor secondInstructor = getExampleInstructor(2, "Steve Carmichael");
 		
 		
 		//Act
@@ -88,18 +88,17 @@ public class JDBCInstructorClassesDAOIntegrationTest extends DAOIntegrationTest 
 		return theClass;
 	}
 	
-	private Instructor getExampleInstructor(int instructorId,  String name, String password) {
+	private Instructor getExampleInstructor(int instructorId,  String name) {
 		Instructor theInstructor = new Instructor();
 		theInstructor.setId(instructorId);
 		theInstructor.setName(name);
-		theInstructor.setPassword(password);
 		return theInstructor;
 	}
 	
 	private void insertExampleInstructorIntoDatabase(Instructor instructor) {
-		String sql = "INSERT INTO instructor (instructor_id, name, password) " 
-					+ "VALUES (?,?,?)";
-		jdbcTemplate.update(sql, instructor.getId(), instructor.getName(), instructor.getPassword());
+		String sql = "INSERT INTO instructor (instructor_id, name) " 
+					+ "VALUES (?,?)";
+		jdbcTemplate.update(sql, instructor.getId(), instructor.getName());
 	}
 	
 	private void insertIntoInstructorClassJoinTable(int instructorId, int classId) {
