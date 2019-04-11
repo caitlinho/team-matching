@@ -10,7 +10,8 @@
 		</div>
 	</c:forEach>
 	<form class="addClass">
-		<button type="submit" class="classButton">Add Class+</button>
+		<c:url var="addClassURL" value="/users/{userName}/addClass" />
+		<a href="${addClassURL}">Add Class +</a>
 	</form>
 </div>
 
