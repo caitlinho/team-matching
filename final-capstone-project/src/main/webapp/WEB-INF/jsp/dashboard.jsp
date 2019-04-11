@@ -5,12 +5,12 @@
 <div class="body">
 	<c:forEach items="${allClasses}" var="singleClass">
 		<div class="singleClass">
-			<c:url var="classDetails" value="/users/{userName}/{classId}" />
+			<c:url var="classDetails" value="/users/{currentUser.userName}/{classId}" />
 			<a href="${classDetails}">${singleClass.name}</a>
 		</div>
 	</c:forEach>
 	<form class="addClass">
-		<c:url var="addClassURL" value="/users/{userName}/addClass" />
+		<c:url var="addClassURL" value="/users/{currentUser.userName}/addClass" />
 		<a href="${addClassURL}">Add Class +</a>
 	</form>
 </div>

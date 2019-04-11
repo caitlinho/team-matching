@@ -46,9 +46,8 @@ public class ClassesController {
 		if(result.hasErrors()) {
 			return "addClass";
 		}
-		
 		instructorClassesDAO.addClass(newClass);
-		
-		return "redirect:/users/{userName}/dashboard";
+		String a = "redirect:/users/"+userName+"/dashboard";
+		return a;
 	}
 }
