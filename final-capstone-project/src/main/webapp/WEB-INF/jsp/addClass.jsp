@@ -2,7 +2,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<c:import url="/WEB-INF/jsp/navbar" />
+<c:import url="/WEB-INF/jsp/navbar.jsp" />
 
 <div class="body">
 	
@@ -15,4 +15,4 @@
 
 </div>
 
-<c:import url="/WEB-INF/jsp/footer" />
+<c:import url="/WEB-INF/jsp/footer.jsp" />
