@@ -12,7 +12,6 @@
 	<form class="addClass">
 		<c:url var="addClassURL" value="/users/{userName}/addClass" />
 		<a href="${addClassURL}">Add Class +</a>
-		
 	</form>
 </div>
 

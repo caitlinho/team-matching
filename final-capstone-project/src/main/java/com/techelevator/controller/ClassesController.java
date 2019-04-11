@@ -37,7 +37,6 @@ public class ClassesController {
 	
 	@RequestMapping(path="/users/{userName}/addClass", method=RequestMethod.GET)
 	public String displayAddClassForm(@PathVariable String userName) {
-		
 		return "addClass";
 	}
 	
