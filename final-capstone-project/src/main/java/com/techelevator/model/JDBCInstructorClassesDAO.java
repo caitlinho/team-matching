@@ -29,14 +29,17 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 	}
 
 	@Override
-	public List<InstructorClasses> viewClasses(int instructorId) {
+	public List<InstructorClasses> viewClasses(int id) {
 		List<InstructorClasses> classList =  new ArrayList<>();
-		String sqlSelectAllClasses = "SELECT class.class_id, class.name FROM class "
-									+ "JOIN instructor_class ON instructor_class.class_id"
-									+ "= class.class_id "
-									+ "JOIN instructor ON instructor.instructor_id = instructor_class.instructor_id "
-									+ "WHERE instructor_class.instructor_id = ? ORDER BY class.name ASC";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllClasses, instructorId);
+//		String sqlSelectAllClasses = "SELECT class.class_id, class.name FROM class "
+//									+ "JOIN instructor_class ON instructor_class.class_id"
+//									+ "= class.class_id "
+//									+ "JOIN instructor ON instructor.instructor_id = instructor_class.instructor_id "
+//									+ "WHERE instructor_class.instructor_id = ? ORDER BY class.name ASC";
+		String sqlSelectAllClasses = "SELECT * FROM class JOIN app_user_class ON class.class_id = app_user_class.class_id"
+										+ " JOIN app_user ON app_user.id = app_user_class.id"
+										+ " WHERE app_user.id = ? ORDER BY class.name ASC";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSelectAllClasses, id);
 		while(results.next()) {
 			InstructorClasses c = mapRowToClass(results);
 			classList.add(c);

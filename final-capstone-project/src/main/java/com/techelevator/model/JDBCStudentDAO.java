@@ -10,8 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-
-
 @Component
 public class JDBCStudentDAO implements StudentDAO{
 	
@@ -59,7 +57,7 @@ public class JDBCStudentDAO implements StudentDAO{
 									+ "JOIN instructor_student ON instructor_student.student_id = student.student_id "
 									+ "JOIN instructor ON instructor.instructor_id = instructor_student.instructor_id "
 									+ "JOIN instructor_class ON instructor_class.instructor_id = instructor.instructor_id "
-									+ "JOIN class ON class.class_id = instructor_class.class_id"
+									+ "JOIN class ON class.class_id = instructor_class.class_id "
 									+ "WHERE class.class_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlStudentsByClass, classId);
 		if(results.next()) {
@@ -78,8 +76,4 @@ public class JDBCStudentDAO implements StudentDAO{
 		student.setComment(results.getString("comments"));
 		return student;
 	}
-
-	
-	
-
 }

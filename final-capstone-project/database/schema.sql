@@ -64,5 +64,11 @@ id int not null,
 constraint fk_app_user_instructor_instructor_id foreign key (instructor_id) references instructor(instructor_id),
 constraint fk_app_user_instructor_id foreign key (id) references app_user(id));
 
+create table app_user_class
+(id int not null,
+class_id int not null,
 
+constraint fk_app_user_class_class_id foreign key (class_id) references class(class_id),
+constraint fk_app_user_class_id foreign key (id) references app_user(id)
+);
 COMMIT;

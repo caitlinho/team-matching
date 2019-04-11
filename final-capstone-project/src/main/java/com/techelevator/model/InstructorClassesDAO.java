@@ -6,6 +6,6 @@ public interface InstructorClassesDAO {
 
 	void addClass(InstructorClasses newClass);
 	
-	List<InstructorClasses> viewClasses(int instructorId);
+	List<InstructorClasses> viewClasses(int id);
 	
 }
