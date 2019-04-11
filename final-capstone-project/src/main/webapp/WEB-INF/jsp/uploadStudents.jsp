@@ -6,9 +6,10 @@
 	<h1>Upload Student List</h1>
 	<h3>Please upload file type .csv</h3>
 	
-	<form action="uploadStudents" method="post" enctype="multipart/form-data">
-	<input type="file" name="studentFile" size="50" />
-	<input type="submit" value="Upload" />
+	<c:url var="uploadStudents" value="/users/{userName}/{classId}" />
+	<form action="${uploadStudents}" method="post" enctype="multipart/form-data">
+		<input type="file" name="studentFile" size="50" />
+		<input type="submit" value="Upload" />
 	</form>
 </div>
 

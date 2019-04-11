@@ -22,7 +22,7 @@
 		<!-- for loop starts -->
 			<tr>
 				<td>
-					<c:url var="student" value="/users/{userName}/{classId}/student${forEachVariable}" />
+					<c:url var="student" value="/users/{userName}/{classId}/student${forEachVariable.id}" />
 					<a href="${student}">${forEachVariable.name}</a>
 				</td>
 				<td>
