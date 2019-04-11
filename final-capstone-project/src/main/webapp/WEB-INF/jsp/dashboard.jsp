@@ -11,7 +11,7 @@
 	</c:forEach>
 	<form class="addClass">
 		<c:url var="addClassURL" value="/users/{currentUser.userName}/addClass" />
-		<a href="${addClassURL}">Add Class +</a>
+		<a href="${addClassURL}">Add Class</a>
 	</form>
 </div>
 
