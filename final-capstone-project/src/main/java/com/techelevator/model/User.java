@@ -13,6 +13,7 @@ public class User {
 	})
 	private String password;
 	private String role;
+	private int id;
 	
 	private String confirmPassword;
 	public String getUserName() {
@@ -45,4 +46,11 @@ public class User {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 }
