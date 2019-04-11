@@ -31,7 +31,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/uploadStudentFile", method=RequestMethod.POST)
-	public String handleFileUpload(@PathVariable String userName, @RequestParam MultipartFile file, ModelMap map) {
+	public String handleFileUpload(@PathVariable String userName, @PathVariable int classId, @RequestParam MultipartFile file, ModelMap map) {
 		
 		File filePath = getFilePath();
 		String fileName = filePath + File.separator + "testFile";
