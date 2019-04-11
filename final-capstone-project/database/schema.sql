@@ -34,7 +34,7 @@ count int not null);
 
 create table instructor
 (instructor_id serial primary key,
-name varchar(255) not null,
+name varchar(255) not null);
 
 create table instructor_class
 (instructor_id int not null,

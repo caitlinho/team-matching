@@ -6,6 +6,7 @@
 	<c:forEach items="${allClasses}" var="singleClass">
 		<div class="singleClass">
 			<c:url var="classDetails" value="/users/{currentUser.userName}/{classId}" />
+			<c:param name="classId" value="${allClasses.classId}" />
 			<a href="${classDetails}">${singleClass.name}</a>
 		</div>
 	</c:forEach>
