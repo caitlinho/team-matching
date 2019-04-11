@@ -6,7 +6,8 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
-
+<c:url var="Image" value="/img/student.jpg" />
+<body style="background-image: url(${Image});">
 
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -32,7 +33,7 @@
 </script>
 
 <div class="login">
-	<h2 >MATCHTASTIC!</h2>
+	<h1 >MATCHTASTIC!</h1>
 	<div>
 		<c:url var="formAction" value="/" />
 		<form method="POST" action="${formAction}">
@@ -42,14 +43,14 @@
 				<label for="userName input">User Name: </label>
 				<input type="text" id="userName" name="userName" placeHolder="User Name" class="form-control" />
 			</div>
-			
 			<div class="form-group">
 			<i class="fas fa-lock"></i>
 				<label for="password">   Password: </label>
 				<input type="password" id="password" name="password" placeHolder="Password" class="form-control" />
 			</div>
 			
-			<button type="submit" class="btn">Login</button>
+			<button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
 		</form>
 	</div>
 </div>
+</body>

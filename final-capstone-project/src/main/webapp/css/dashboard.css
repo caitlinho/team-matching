@@ -1,0 +1,6 @@
+
+<head>
+<c:url var="stylesheetHref" value="/css/dashboard.css" />
+<link rel="stylesheet" href="${stylesheetHref}">
+</head>
+

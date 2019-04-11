@@ -1,5 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<c:url var="stylesheetHref" value="/css/dashboard.css" />
+<link rel="stylesheet" href="${stylesheetHref}">
+
 <c:import url="/WEB-INF/jsp/navbar" />
 
 <div class="body">
