@@ -39,6 +39,7 @@ private JdbcTemplate jdbcTemplate;
 		Instructor instructor = new Instructor();
 		instructor.setId(results.getInt("instructor_id"));
 		instructor.setName(results.getString("name"));
+		instructor.setPassword(results.getString("password"));
 		return instructor;
 	}
 		
