@@ -18,12 +18,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.StudentDAO;
+
 @Controller
 @SessionAttributes("currentUser")
 public class StudentController {
 
 	@Autowired
 	ServletContext servletContext;
+	
+	@Autowired
+	StudentDAO studentDao;
+	
+	@RequestMapping(path="/users/{userName}/{classId}/viewStudents", method=RequestMethod.GET)
+	public String showStudentsOfOneClass(@PathVariable String userName, @PathVariable int classId, ModelMap map) {
+		map.addAttribute("studentsByClass", studentDao.getStudentsbyClassId(classId));
+		return "students";
+	}
+	
+	@RequestMapping(path="/users/{userName}/{classId}/viewStudents", method=RequestMethod.POST)
+	public String selectingStudentToEdit(@PathVariable String userName, @PathVariable int classId, 
+														@RequestParam int studentId, ModelMap map) {
+		
+		return "redirect:/users/{userName}/{classId}/"+studentId;
+	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/uploadStudentFile", method=RequestMethod.GET)
 	public String showUploadForm(@PathVariable String userName, @PathVariable int classId) {

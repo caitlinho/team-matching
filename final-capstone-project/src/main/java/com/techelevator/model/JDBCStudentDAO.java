@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -43,15 +44,32 @@ public class JDBCStudentDAO implements StudentDAO{
 		return student;
 	}
 
-	//need to fix
 	@Override
 	public Student editStudent(Student student) {	
 		String sqlEditStudent = "UPDATE student SET name = ?, email = ?, comments = ? WHERE student_id = ?";
-		jdbcTemplate.update(sqlEditStudent, student.getStudentId());
+		jdbcTemplate.update(sqlEditStudent, student.getName(), student.getEmail(), student.getComment(), student.getStudentId());
 		
 		return student;
 	}
 
+	@Override
+	public List<Student> getStudentsbyClassId(int classId) {
+		List<Student> studentsByClass = new ArrayList<>();
+		String sqlStudentsByClass = "SELECT student_id, name, email, comments FROM student "
+									+ "JOIN instructor_student ON instructor_student.student_id = student.student_id "
+									+ "JOIN instructor ON instructor.instructor_id = instructor_student.instructor_id "
+									+ "JOIN instructor_class ON instructor_class.instructor_id = instructor.instructor_id "
+									+ "JOIN class ON class.class_id = instructor_class.class_id"
+									+ "WHERE class.class_id = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlStudentsByClass, classId);
+		if(results.next()) {
+			Student s = new Student();
+			studentsByClass.add(s);
+		}
+		
+		return studentsByClass;
+	}
+	
 	private Student mapRowToStudent(SqlRowSet results) {
 		Student student = new Student();
 		student.setStudentId(results.getInt("student_id"));
@@ -60,6 +78,8 @@ public class JDBCStudentDAO implements StudentDAO{
 		student.setComment(results.getString("comments"));
 		return student;
 	}
+
+	
 	
 
 }

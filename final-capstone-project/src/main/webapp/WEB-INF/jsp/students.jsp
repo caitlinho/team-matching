@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:import url="/WEB-INF/jsp/navbar" />
+<c:import url="/WEB-INF/jsp/navbar.jsp" />
 
 <div class="body">
 	<h1>Students</h1>
@@ -22,7 +22,7 @@
 		<!-- for loop starts -->
 			<tr>
 				<td>
-					<c:url var="student" value="/users/{userName}/{classId}/student${forEachVariable}" />
+					<c:url var="student" value="/users/{userName}/{classId}/student${forEachVariable.id}" />
 					<a href="${student}">${forEachVariable.name}</a>
 				</td>
 				<td>
@@ -44,4 +44,4 @@
 	</table>
 </div>
 
-<c:import url="/WEB-INF/jsp/footer" />
+<c:import url="/WEB-INF/jsp/footer.jsp" />

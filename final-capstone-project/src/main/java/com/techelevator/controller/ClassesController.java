@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.techelevator.model.InstructorClasses;
@@ -29,9 +30,9 @@ public class ClassesController {
 	
 	@RequestMapping(path="/users/{userName}/dashboard", method=RequestMethod.GET)
 	public String viewDashboard(@PathVariable 
-			String userName, ModelMap map, HttpSession session) {
+			String userName, ModelMap map, HttpSession session, @RequestParam int classId) {
 		map.addAttribute("allClasses", instructorClassesDAO.viewClasses(instructorDAO.getInstructorById(userName)));
-
+		
 		return "dashboard";	
 	}
 	
@@ -46,9 +47,8 @@ public class ClassesController {
 		if(result.hasErrors()) {
 			return "addClass";
 		}
-		
 		instructorClassesDAO.addClass(newClass);
-		
-		return "redirect:/users/{userName}/dashboard";
+		String a = "redirect:/users/"+userName+"/dashboard";
+		return a;
 	}
 }

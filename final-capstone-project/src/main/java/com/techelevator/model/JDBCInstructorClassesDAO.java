@@ -23,14 +23,15 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 
 	@Override
 	public void addClass(InstructorClasses newClass) {
-		String sqlToAddClass = "INSERT INTO class (class_id,name) VALUES (default, ?)";
-		jdbcTemplate.update(sqlToAddClass, newClass.getName());	
+		String sqlToAddClass = "INSERT INTO class (class_id,name) VALUES (default, ?) RETURNING class_id";
+		int classId = jdbcTemplate.queryForObject(sqlToAddClass, Integer.class, newClass.getName());
+		newClass.setClassId(classId);
 	}
 
 	@Override
 	public List<InstructorClasses> viewClasses(int instructorId) {
 		List<InstructorClasses> classList =  new ArrayList<>();
-		String sqlSelectAllClasses = "SELECT class.name FROM class "
+		String sqlSelectAllClasses = "SELECT class.class_id, class.name FROM class "
 									+ "JOIN instructor_class ON instructor_class.class_id"
 									+ "= class.class_id "
 									+ "JOIN instructor ON instructor.instructor_id = instructor_class.instructor_id "
@@ -51,5 +52,7 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 		
 		return c;
 	}
+	
+	
 	
 }
