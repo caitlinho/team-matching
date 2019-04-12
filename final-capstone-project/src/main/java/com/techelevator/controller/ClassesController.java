@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.techelevator.model.InstructorClasses;
 import com.techelevator.model.InstructorClassesDAO;
-import com.techelevator.model.InstructorDAO;
 import com.techelevator.model.User;
 import com.techelevator.model.UserDAO;
 
@@ -26,9 +25,6 @@ public class ClassesController {
 
 	@Autowired
 	private InstructorClassesDAO instructorClassesDAO;
-	
-	@Autowired
-	private InstructorDAO instructorDAO;
 	
 	@Autowired
 	private UserDAO userDao;
@@ -48,12 +44,14 @@ public class ClassesController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/addClass", method=RequestMethod.POST)
-	public String addClass(@PathVariable String userName, ModelMap map, @Valid @ModelAttribute("addClass") InstructorClasses newClass, BindingResult result) {
+	public String addClass(@PathVariable String userName, ModelMap map, @Valid @ModelAttribute("addClass") InstructorClasses newClass, BindingResult result, HttpSession session) {
 		
 		if(result.hasErrors()) {
 			return "addClass";
 		}
-		instructorClassesDAO.addClass(newClass);
+		User user = (User) session.getAttribute("currentUser");
+		int id = user.getId();
+		instructorClassesDAO.addClass(newClass, id);
 		String a = "redirect:/users/"+userName+"/dashboard";
 		return a;
 	}

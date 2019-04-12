@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.techelevator.model.InstructorClasses;
 import com.techelevator.model.InstructorClassesDAO;
+import com.techelevator.model.User;
 
 @Component
 public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
@@ -25,10 +26,9 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 
 
 	@Override
-	public void addClass(InstructorClasses newClass) {
-		String sqlToAddClass = "INSERT INTO class (class_id,name) VALUES (default, ?) RETURNING class_id";
-		int classId = jdbcTemplate.queryForObject(sqlToAddClass, Integer.class, newClass.getName());
-		newClass.setClassId(classId);
+	public void addClass(InstructorClasses newClass, int id) {
+		insertClassToClass(newClass);
+		insertIntoJoinTable(id, newClass.getClassId());
 	}
 
 	@Override
@@ -55,6 +55,15 @@ public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
 		return c;
 	}
 	
+	private void insertClassToClass(InstructorClasses newClass) {
+		String sqlToAddClass = "INSERT INTO class (class_id,name) VALUES (default, ?) RETURNING class_id";
+		int classId = jdbcTemplate.queryForObject(sqlToAddClass, Integer.class, newClass.getName());
+		newClass.setClassId(classId);
+	}
 	
+	private void insertIntoJoinTable (int id, int classId) {
+		String sqlToAddJoin = "INSERT INTO app_user_class (id, class_id) VALUES (?, ?)";
+		jdbcTemplate.update(sqlToAddJoin, id, classId);
+	}
 	
 }

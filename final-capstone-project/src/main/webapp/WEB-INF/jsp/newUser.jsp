@@ -69,6 +69,13 @@
 					name="confirmPassword" placeHolder="Re-Type Password"
 					class="form-control" />
 			</div>
+			<div class="form-group">
+				<label for="role">Choose Role: </label>
+				<select>
+					<option value="instructor">Instructor</option>
+					<option value="administrator">Administrator</option>
+				</select>
+			</div>
 			<button type="submit" class="btn btn-primary">Create User</button>
 		</div>
 
