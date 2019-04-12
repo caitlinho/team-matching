@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.techelevator.model.Instructor;
 import com.techelevator.model.InstructorClasses;
 import com.techelevator.model.InstructorClassesDAO;
-import com.techelevator.model.InstructorDAO;
 import com.techelevator.model.User;
 import com.techelevator.model.UserDAO;
 

@@ -3,8 +3,7 @@ package com.techelevator;
 import org.junit.Before;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-
-import com.techelevator.model.JDBCUserDAO;
+import com.techelevator.model.jdbc.JDBCUserDAO;
 
 
 public class JDBCUserDAOIntegrationTest extends DAOIntegrationTest {

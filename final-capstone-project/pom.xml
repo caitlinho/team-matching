@@ -6,6 +6,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<dependencies>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-csv</artifactId>
+		    <version>1.5</version>
+		</dependency>
 		<!-- Apache Commons FileUpload -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>

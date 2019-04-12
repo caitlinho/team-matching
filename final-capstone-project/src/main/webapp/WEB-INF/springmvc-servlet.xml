@@ -63,5 +63,7 @@
 			<property name="username" value="#{ @dbUrl.getUserInfo().split(':')[0] }"/>
 			<property name="password" value="#{ @dbUrl.getUserInfo().split(':')[1] }"/>
 		</bean>	
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		</bean>
 	</beans>
 </beans>

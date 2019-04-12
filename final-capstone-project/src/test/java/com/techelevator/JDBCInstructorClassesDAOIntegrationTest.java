@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.techelevator.model.Instructor;
 import com.techelevator.model.InstructorClasses;
-import com.techelevator.model.JDBCInstructorClassesDAO;
+import com.techelevator.model.jdbc.JDBCInstructorClassesDAO;
 
 public class JDBCInstructorClassesDAOIntegrationTest extends DAOIntegrationTest {
 	

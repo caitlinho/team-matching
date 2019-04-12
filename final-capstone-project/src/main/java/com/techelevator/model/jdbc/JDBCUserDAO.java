@@ -1,4 +1,4 @@
-package com.techelevator.model;
+package com.techelevator.model.jdbc;
 
 import javax.sql.DataSource;
 
@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import com.techelevator.model.User;
+import com.techelevator.model.UserDAO;
 import com.techelevator.security.PasswordHasher;
 
 @Component
@@ -24,13 +25,13 @@ public class JDBCUserDAO implements UserDAO {
 	}
 	
 	@Override
-	public void saveUser(String userName, String password) {
+	public void saveUser(String userName, String password, String role) {
 		byte[] salt = hashMaster.generateRandomSalt();
 		String hashedPassword = hashMaster.computeHash(password, salt);
 		String saltString = new String(Base64.encode(salt));
 		
-		jdbcTemplate.update("INSERT INTO app_user(user_name, password, salt) VALUES (?, ?, ?)",
-				userName, hashedPassword, saltString);
+		jdbcTemplate.update("INSERT INTO app_user(user_name, password, role, salt) VALUES (?, ?, ?, ?)",
+				userName, hashedPassword, role, saltString);
 	}
 
 	@Override
@@ -67,6 +68,7 @@ public class JDBCUserDAO implements UserDAO {
 			thisUser = new User();
 			thisUser.setUserName(user.getString("user_name"));
 			thisUser.setPassword(user.getString("password"));
+			thisUser.setId(user.getInt("id"));
 		}
 
 		return thisUser;
