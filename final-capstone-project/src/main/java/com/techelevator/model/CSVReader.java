@@ -30,11 +30,17 @@ public class CSVReader {
             for (CSVRecord csvRecord : csvParser) {
 //                studentList.addAll(csvRecord);
                 // Accessing Values by Column Index
+            	Student student = new Student();
                 String id = csvRecord.get(0);
-                String name = csvRecord.get(1);
-                String email = csvRecord.get(2);
-                String comment = csvRecord.get(3);
+                int studentId = Integer.parseInt(id);
+                student.setStudentId(studentId);
+                student.setName(csvRecord.get(1));
+                student.setEmail(csvRecord.get(2));
+                student.setComment(csvRecord.get(3));
+              
+                studentList.add(student);
             }
+            
         
             
         }
