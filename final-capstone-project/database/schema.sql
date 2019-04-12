@@ -45,4 +45,11 @@ class_id int not null,
 constraint fk_app_user_class_class_id foreign key (class_id) references class(class_id),
 constraint fk_app_user_class_id foreign key (id) references app_user(id)
 );
+
+create table class_student
+(class_id int not null,
+student_id int not null,
+
+constraint fk_class_student_class_id foreign key (class_id) references class(class_id),
+constraint fk_class_student_student_id foreign key (student_id) references student(student_id));
 COMMIT;

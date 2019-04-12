@@ -2,12 +2,16 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<c:import url="/WEB-INF/jsp/navbar.jsp" />
+
+
+<head>
 <c:url var="stylesheetHref" value="/css/addClass.css" />
 <link rel="stylesheet" href="${stylesheetHref}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 </head>
 
-<c:import url="/WEB-INF/jsp/navbar.jsp" />
+
 
 <div class="login">
 	<h1 >Add A Class</h1>
