@@ -58,15 +58,17 @@ public class JDBCStudentDAO implements StudentDAO{
 	}
 	
 	@Override
-	public void addStudent(Student student) {	
+	public void addStudent(Student student, int classId) {	
 		String sqlAddStudent = "INSERT INTO student (name, email, comments) VALUES (?, ?, ?)";
 		jdbcTemplate.queryForRowSet(sqlAddStudent, student.getName(), student.getEmail(), student.getEmail());
+		insertIntoStudentClassJoinTable(classId, student.getStudentId());
 	}
 	
 	@Override
-	public void deleteStudent(int studentId) {
+	public void deleteStudent(int studentId, int classId) {
 		String sqlDelete = "DELETE FROM student WHERE student_id = ?;";
 		jdbcTemplate.queryForRowSet(sqlDelete, studentId);
+		deleteStudentClassJoinTable(studentId);
 	}
 
 	@Override
@@ -92,5 +94,16 @@ public class JDBCStudentDAO implements StudentDAO{
 		student.setEmail(results.getString("email"));
 		student.setComment(results.getString("comments"));
 		return student;
+	}
+	
+	private void insertIntoStudentClassJoinTable(int classId, int studentId) {
+		String sql = "INSERT INTO class_student (class_id, student_id) "
+					+ "VALUES (?, ?)";
+		jdbcTemplate.update(sql, classId, studentId);
+	}
+	
+	private void deleteStudentClassJoinTable(int studentId) {
+		String sql = "DELETE FROM class_student WHERE student_id = ? ";
+		jdbcTemplate.update(sql, studentId);
 	}
 }
