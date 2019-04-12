@@ -7,10 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletContext;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.techelevator.model.Student;
 import com.techelevator.model.StudentDAO;
 
 @Controller
@@ -49,7 +53,12 @@ public class StudentController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/addStudent", method=RequestMethod.POST)
-	public String addStudentForm(@PathVariable String userName, @PathVariable int classId) {
+	public String addStudentForm(@PathVariable String userName, @PathVariable int classId, @Valid @ModelAttribute("addStudent")Student student, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return "addStudent";
+		}
+		studentDao.addStudent(student, classId);
 		return "redirect:/users/"+userName+"/"+classId;
 	}
 	
