@@ -43,50 +43,14 @@ public class StudentController {
 		return "redirect:/users/{userName}/{classId}/"+studentId;
 	}
 	
-	@RequestMapping(path="/users/{userName}/{classId}/upload", method=RequestMethod.GET)
-	public String showUploadForm(@PathVariable String userName, @PathVariable int classId) {
-		return "uploadStudents";
+	@RequestMapping(path="/users/{userName}/{classId}/addStudent", method=RequestMethod.GET)
+	public String displayAddStudentForm(@PathVariable String userName, @PathVariable int classId) {
+		return "addStudent";
 	}
 	
-	@RequestMapping(path="/users/{userName}/{classId}/upload", method=RequestMethod.POST)
-	public String handleFileUpload(@PathVariable String userName, @PathVariable int classId, @RequestParam MultipartFile file, ModelMap map) {
-		
-		File filePath = getFilePath();
-		String fileName = filePath + File.separator + "testFile";
-		
-		if (file.isEmpty()) {
-			map.addAttribute("message", "File Object empty");
-		} else {
-			createFile(file, fileName);
-		}
-		return "students";
+	@RequestMapping(path="/users/{userName}/{classId}/addStudent", method=RequestMethod.POST)
+	public String addStudentForm(@PathVariable String userName, @PathVariable int classId) {
+		return "redirect:/users/"+userName+"/"+classId;
 	}
 	
-	private File getFilePath() {
-		String serverPath = getServerContextPath();
-		File filePath = new File(serverPath);
-		if (!filePath.exists()) {
-			filePath.mkdirs();
-		}
-		return filePath;
-	}
-	
-	private String getServerContextPath() {
-		return servletContext.getRealPath("/") + "uploads";
-	}
-	
-	private void createFile(MultipartFile file, String name) {
-		File studentFile = new File(name);
-		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(studentFile))) {
-	
-			stream.write(file.getBytes());
-		
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 }

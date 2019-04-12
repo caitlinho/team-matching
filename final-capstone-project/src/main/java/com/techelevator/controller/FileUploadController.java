@@ -7,30 +7,37 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.techelevator.model.CSVReader;
+import com.techelevator.model.InstructorClassesDAO;
+import com.techelevator.model.User;
 
+@Controller
+@SessionAttributes("currentUser")
 public class FileUploadController {
 
 	@Autowired
 	ServletContext servletContext;
 	
-	@RequestMapping(path= {"/", "/upload"}, method=RequestMethod.GET)
-	public String showUploadForm() {
-		return "uploadForm";
+	@RequestMapping(path= {"/users/{userName}/{classId}/upload"}, method=RequestMethod.GET)
+	public String showUploadForm(@PathVariable String userName, @PathVariable int classId, ModelMap map) {
+		return "uploadStudents";
 	}
 	
-	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
-	public String handleFileUpload(@RequestParam(required=false) String CSRF_TOKEN, @RequestParam MultipartFile file, ModelMap map) throws IOException {
+	@RequestMapping(path="/users/{userName}/{classId}/upload", method=RequestMethod.POST)
+	public String handleFileUpload(@PathVariable String userName, @PathVariable int classId, @RequestParam(required=false) String CSRF_TOKEN, @RequestParam MultipartFile file, ModelMap map) throws IOException {
 		
 		File filePath = getFilePath();
 		String fileName = filePath + File.separator + "testImage";
@@ -40,9 +47,9 @@ public class FileUploadController {
 		CSVReader reader = new CSVReader();
 		reader.readFile(fileConverted);
 			
-			map.addAttribute("message", "uploaded to: " + fileName);
-			return "showFile";
-		}
+		map.addAttribute("message", "uploaded to: " + fileName);
+		return "redirect:/users/"+userName+"/"+classId;
+	}
 	
 	@RequestMapping(path="/image/{imageName}", method=RequestMethod.GET)
 	@ResponseBody
@@ -54,8 +61,7 @@ public class FileUploadController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
-		}
-		
+		}		
 	}
 
 	private File getFilePath() {
@@ -64,8 +70,7 @@ public class FileUploadController {
 			if (!filePath.exists()) {
 				filePath.mkdirs();
 			}
-			return filePath;
-		
+			return filePath;	
 	}
 
 	private String getServerContextPath() {
@@ -83,7 +88,6 @@ public class FileUploadController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return image;
-		
+		return image;	
 	}
 }
