@@ -19,14 +19,13 @@ public class JDBCInstructorClassesDAOIntegrationTest extends DAOIntegrationTest 
  	private JDBCInstructorClassesDAO dao;
  	private JDBCUserDAO userDAO;
  	private JdbcTemplate jdbcTemplate;
- 	private PasswordHasher hashMaster;
  	
 	 	@Before
 	 	public void setupTest() {
 	 		dao = new JDBCInstructorClassesDAO(getDataSource());
 	 		jdbcTemplate = new JdbcTemplate(getDataSource());
 	 		
-			userDAO = new JDBCUserDAO(getDataSource(), hashMaster);
+			userDAO = new JDBCUserDAO(getDataSource(), new PasswordHasher());
 	 	}
  	
  		@Test
@@ -93,9 +92,9 @@ public class JDBCInstructorClassesDAOIntegrationTest extends DAOIntegrationTest 
  	}
  	
 	private void insertExampleInstructorIntoDatabase(User instructor) {
-		String sql = "INSERT INTO app_user (id, user_name, password, role) " 
-					+ "VALUES (?,?,?,?)";
-		jdbcTemplate.update(sql, instructor.getId(), instructor.getUserName(), instructor.getPassword(), instructor.getRole());
+		String sql = "INSERT INTO app_user (id, user_name, password, role, salt) " 
+					+ "VALUES (?,?,?,?,?)";
+		jdbcTemplate.update(sql, instructor.getId(), instructor.getUserName(), instructor.getPassword(), instructor.getRole(), "salt");
 	}
 	
 	private void insertIntoInstructorClassJoinTable(int instructorId, int classId) {
