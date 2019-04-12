@@ -10,14 +10,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-<<<<<<< HEAD:final-capstone-project/src/main/java/com/techelevator/model/jdbc/JDBCStudentDAO.java
 import com.techelevator.model.Student;
 import com.techelevator.model.StudentDAO;
 
 
-
-=======
->>>>>>> 240ed91f21acbe85db8cbac8d79eab82a1603723:final-capstone-project/src/main/java/com/techelevator/model/JDBCStudentDAO.java
 @Component
 public class JDBCStudentDAO implements StudentDAO{
 	
@@ -87,11 +83,4 @@ public class JDBCStudentDAO implements StudentDAO{
 		student.setComment(results.getString("comments"));
 		return student;
 	}
-<<<<<<< HEAD:final-capstone-project/src/main/java/com/techelevator/model/jdbc/JDBCStudentDAO.java
-
-	
-	
-
-=======
->>>>>>> 240ed91f21acbe85db8cbac8d79eab82a1603723:final-capstone-project/src/main/java/com/techelevator/model/JDBCStudentDAO.java
 }
