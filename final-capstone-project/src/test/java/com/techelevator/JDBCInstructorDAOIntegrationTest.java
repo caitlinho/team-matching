@@ -7,8 +7,8 @@ import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.techelevator.model.Instructor;
-import com.techelevator.model.JDBCInstructorDAO;
 import com.techelevator.model.User;
+import com.techelevator.model.jdbc.JDBCInstructorDAO;
 
 public class JDBCInstructorDAOIntegrationTest extends DAOIntegrationTest {
 	
