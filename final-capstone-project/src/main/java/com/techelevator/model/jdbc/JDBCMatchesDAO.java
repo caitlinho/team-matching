@@ -1,6 +1,9 @@
-package com.techelevator.model;
+package com.techelevator.model.jdbc;
 
 import java.util.List;
+
+import com.techelevator.model.Matches;
+import com.techelevator.model.MatchesDAO;
 
 public class JDBCMatchesDAO implements MatchesDAO{
 

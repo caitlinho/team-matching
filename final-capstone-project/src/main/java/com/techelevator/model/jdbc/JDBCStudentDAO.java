@@ -1,4 +1,4 @@
-package com.techelevator.model;
+package com.techelevator.model.jdbc;
 
 import java.util.List;
 
@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+
+import com.techelevator.model.Student;
+import com.techelevator.model.StudentDAO;
 
 
 
@@ -20,16 +23,19 @@ public class JDBCStudentDAO implements StudentDAO{
 	public JDBCStudentDAO (DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-
-	//need to fix
-	@Override
-	public void addStudentList() {
-	String sqlToAddStudentsList = "COPY student (student_id, name, email, comments) FROM '/Users/gsutter/Development/capstone/final-capstone-team-bravo/studentList.csv' DELIMITERS ',' CSV header FORCE QUOTE *;\n"; 
-	jdbcTemplate.update(sqlToAddStudentsList);
-	 
-			
-	}
 	
+	@Override
+	public void addStudentList(List<Student> studentList) {
+		String sqlToAddStudent = "INSERT INTO student (student_id, name, email, comments) VALUES (DEFAULT, ?, ?, ?) "
+								+ "RETURNING student_id;";
+		for (int index = 0; index < studentList.size(); index++) {
+		int studentId = jdbcTemplate.queryForObject(sqlToAddStudent, Integer.class, studentList.get(index).getName(), 
+																					studentList.get(index).getEmail(), 
+																					studentList.get(index).getComment());
+		studentList.get(index).setStudentId(studentId);
+		}
+	}
+
 	@Override
 	public Student getStudentById(int studentId) {
 		Student student = null;
@@ -59,6 +65,8 @@ public class JDBCStudentDAO implements StudentDAO{
 		student.setComment(results.getString("comments"));
 		return student;
 	}
+
+	
 	
 
 }

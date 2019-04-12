@@ -96,4 +96,6 @@ GRANT ALL ON app_user TO postgres;
 
 SELECT * FROM app_user
 INSERT INTO app_user (id, user_name, password, role, salt) VALUES (DEFAULT, 'blauvray', '!CodingRules1', 'instructor')
+UPDATE student SET name = ?, email = ?, comments = ? WHERE student_id = ?
 
+INSERT INTO student (student_id, name, email, comments) VALUES (DEFAULT, 'Caitlin Ho', 'cho@gmail.com', 'akdflakd');
