@@ -30,7 +30,7 @@ public class ClassesController {
 	
 	@RequestMapping(path="/users/{userName}/dashboard", method=RequestMethod.GET)
 	public String viewDashboard(@PathVariable 
-			String userName, ModelMap map, HttpSession session, @RequestParam(required = false) int classId) {
+			String userName, ModelMap map, HttpSession session) {
 		map.addAttribute("allClasses", instructorClassesDAO.viewClasses(instructorDAO.getInstructorById(userName)));
 		
 		return "dashboard";	
