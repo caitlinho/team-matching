@@ -34,7 +34,7 @@ count int not null);
 
 create table instructor
 (instructor_id serial primary key,
-name varchar(255) not null,
+name varchar(255) not null);
 
 create table instructor_class
 (instructor_id int not null,
@@ -64,5 +64,11 @@ id int not null,
 constraint fk_app_user_instructor_instructor_id foreign key (instructor_id) references instructor(instructor_id),
 constraint fk_app_user_instructor_id foreign key (id) references app_user(id));
 
+create table app_user_class
+(id int not null,
+class_id int not null,
 
+constraint fk_app_user_class_class_id foreign key (class_id) references class(class_id),
+constraint fk_app_user_class_id foreign key (id) references app_user(id)
+);
 COMMIT;

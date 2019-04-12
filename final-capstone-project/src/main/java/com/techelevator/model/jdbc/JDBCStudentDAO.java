@@ -1,5 +1,6 @@
 package com.techelevator.model.jdbc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -9,11 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+<<<<<<< HEAD:final-capstone-project/src/main/java/com/techelevator/model/jdbc/JDBCStudentDAO.java
 import com.techelevator.model.Student;
 import com.techelevator.model.StudentDAO;
 
 
 
+=======
+>>>>>>> 240ed91f21acbe85db8cbac8d79eab82a1603723:final-capstone-project/src/main/java/com/techelevator/model/JDBCStudentDAO.java
 @Component
 public class JDBCStudentDAO implements StudentDAO{
 	
@@ -57,6 +61,24 @@ public class JDBCStudentDAO implements StudentDAO{
 		return student;
 	}
 
+	@Override
+	public List<Student> getStudentsbyClassId(int classId) {
+		List<Student> studentsByClass = new ArrayList<>();
+		String sqlStudentsByClass = "SELECT student_id, name, email, comments FROM student "
+									+ "JOIN instructor_student ON instructor_student.student_id = student.student_id "
+									+ "JOIN instructor ON instructor.instructor_id = instructor_student.instructor_id "
+									+ "JOIN instructor_class ON instructor_class.instructor_id = instructor.instructor_id "
+									+ "JOIN class ON class.class_id = instructor_class.class_id "
+									+ "WHERE class.class_id = ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlStudentsByClass, classId);
+		if(results.next()) {
+			Student s = new Student();
+			studentsByClass.add(s);
+		}
+		
+		return studentsByClass;
+	}
+	
 	private Student mapRowToStudent(SqlRowSet results) {
 		Student student = new Student();
 		student.setStudentId(results.getInt("student_id"));
@@ -65,8 +87,11 @@ public class JDBCStudentDAO implements StudentDAO{
 		student.setComment(results.getString("comments"));
 		return student;
 	}
+<<<<<<< HEAD:final-capstone-project/src/main/java/com/techelevator/model/jdbc/JDBCStudentDAO.java
 
 	
 	
 
+=======
+>>>>>>> 240ed91f21acbe85db8cbac8d79eab82a1603723:final-capstone-project/src/main/java/com/techelevator/model/JDBCStudentDAO.java
 }
