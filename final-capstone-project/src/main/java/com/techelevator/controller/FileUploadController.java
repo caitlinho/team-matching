@@ -30,14 +30,15 @@ public class FileUploadController {
 	}
 	
 	@RequestMapping(path="/uploadFile", method=RequestMethod.POST)
-	public String handleFileUpload(@RequestParam(required=false) String CSRF_TOKEN, @RequestParam MultipartFile file, ModelMap map) {
+	public String handleFileUpload(@RequestParam(required=false) String CSRF_TOKEN, @RequestParam MultipartFile file, ModelMap map) throws IOException {
 		
 		File filePath = getFilePath();
 		String fileName = filePath + File.separator + "testImage";
 		
-			createImage(file, fileName);
+		File fileConverted = createImage(file, fileName);
+	
 		CSVReader reader = new CSVReader();
-		
+		reader.readFile(fileConverted);
 			
 			map.addAttribute("message", "uploaded to: " + fileName);
 			return "showFile";
@@ -71,7 +72,7 @@ public class FileUploadController {
 		return servletContext.getRealPath("/") + "uploads";
 	}
 
-	private void createImage(MultipartFile file, String fileName) {
+	private File createImage(MultipartFile file, String fileName) {
 		File image = new File(fileName);
 		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(image))) {
 			
@@ -82,7 +83,7 @@ public class FileUploadController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		return image;
 		
 	}
 }
