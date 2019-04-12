@@ -56,6 +56,18 @@ public class JDBCStudentDAO implements StudentDAO{
 		
 		return student;
 	}
+	
+	@Override
+	public void addStudent(Student student) {	
+		String sqlAddStudent = "INSERT INTO student (name, email, comments) VALUES (?, ?, ?)";
+		jdbcTemplate.queryForRowSet(sqlAddStudent, student.getName(), student.getEmail(), student.getEmail());
+	}
+	
+	@Override
+	public void deleteStudent(int studentId) {
+		String sqlDelete = "DELETE FROM student WHERE student_id = ?;";
+		jdbcTemplate.queryForRowSet(sqlDelete, studentId);
+	}
 
 	@Override
 	public List<Student> getStudentsbyClassId(int classId) {
