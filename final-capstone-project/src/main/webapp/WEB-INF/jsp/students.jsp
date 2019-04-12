@@ -6,9 +6,9 @@
 	<h1>Students</h1>
 	
 	<div class="studentNav">
-		<c:url var="uploadStudents" value="/users/{userName}/{classId}/upload" />
+		<c:url var="uploadStudents" value="/users/${userName}/${classId}/upload" />
 		<a href="${uploadStudents}">Upload Student List</a>
-		<c:url var="addStudent" value="/users/{userName}/{classId}/addStudent" />
+		<c:url var="addStudent" value="/users/${userName}/${classId}/addStudent" />
 		<a href="${addStudent}">Add Student to Class</a>
 	</div>
 	
@@ -19,28 +19,28 @@
 			<th>Comments</th>
 			<th>Active</th>
 		</tr>
-		<!-- for loop starts -->
+		<c:forEach var="student" items="${studentsByClass}">
 			<tr>
 				<td>
-					<c:url var="student" value="/users/{userName}/{classId}/student${forEachVariable.id}" />
-					<a href="${student}">${forEachVariable.name}</a>
+					<c:url var="student" value="/users/${userName}/${classId}/${student.id}" />
+					<a href="${student}">${student.name}</a>
 				</td>
 				<td>
-					<c:out value="${forEachVariable.email}" />
+					<c:out value="${student.email}" />
 				</td>
 				<td>
-					<c:out value="${forEachVariable.comments}" />
+					<c:out value="${student.comments}" />
 				</td>
 				<td>
-					<c:if test="${forEachVariable.active} == true"> {
+					<c:if test="${student.active} == true"> {
 						<c:out value="Active" />
 					</c:if>
-					<c:if test="${forEachVariable.active} == false"> {
+					<c:if test="${student.active} == false"> {
 						<c:out value="Inactive" />
 					</c:if>
 				</td>
 			</tr>
-		<!-- for loop ends -->
+		</c:forEach>
 	</table>
 </div>
 

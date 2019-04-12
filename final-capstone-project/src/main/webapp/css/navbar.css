@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+body {
+  background: grey;
+  max-width: 960px;
+  padding: 0 20px;
+  margin: 0 auto;
+  height: auto;
+  font-family: sans-serif;
+  color: rgba(255, 255, 255, 0.4);
+  background-image: url("/img/student.jpg");
+  background-size: cover;
+}
+
+#main-ul {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  max-width: 760px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.2) 75%, rgba(255, 255, 255, 0) 100%);
+  text-decoration: none;	
+}
+
+#main-ul li {
+  padding: 20px;
+}
+
+#main-ul a {
+  text-decoration: none;
+  color: black;
+}
+
+#main-ul li:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/*media queries*/
+/* @media screen and (min-width: 0px) {
+  .toggle-nav {display: block;}
+  #main-ul {display: none;}
+}
+
+@media screen and (min-width: 700px) {
+  .toggle-nav {display: none;}
+  #main-ul {display: flex;}
+} */
