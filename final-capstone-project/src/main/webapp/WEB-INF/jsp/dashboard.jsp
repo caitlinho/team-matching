@@ -16,7 +16,7 @@
 		</div>
 	</c:forEach>
 	<div class="login">
-	<h1 >Add A Class</h1>
+	
 	<form class="addClass btn btn-primary btn-block btn-large">
 		<c:url var="addClassURL" value="/users/${currentUser.userName}/addClass" />
 		<a href="${addClassURL}">Add Class</a>

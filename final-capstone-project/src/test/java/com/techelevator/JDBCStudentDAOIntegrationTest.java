@@ -73,7 +73,33 @@ public class JDBCStudentDAOIntegrationTest extends DAOIntegrationTest {
 		assertEquals(student.getEmail(), actual.getEmail());
 		assertEquals(student.getComment(), actual.getComment());
 	}
-
+	
+	@Test
+	public void edit_students_updates_in_datbase_correctly() {
+		//Arrange
+		Student student = getExampleStudent(1, "Dominick Hemphill", "dhemp@gmail.com", "smiles on smiles.");
+		Student updatedStudent = getExampleStudent(1, "Caitlin Ho", "c@gmail.com", "hungry at all times");
+		
+		//Act
+		insertExampleStudentIntoDatabase(student);
+		Student actual = dao.editStudent(updatedStudent);
+		
+		//Assert
+		assertEquals(1, actual.getStudentId());
+		assertEquals("Caitlin Ho", actual.getName());
+		assertEquals("c@gmail.com" , actual.getEmail());
+		assertEquals("hungry at all times", actual.getComment());
+	}
+	
+	@Test
+	public void get_student_by_class_id_returns_one_student() {
+		
+	}
+	
+	@Test
+	public void get_student_by_class_id_returns_correct_student() {
+		
+	}
 
 	private Student getExampleStudent(int studentId, String name, String email, String comments) {
 		Student theStudent = new Student();
