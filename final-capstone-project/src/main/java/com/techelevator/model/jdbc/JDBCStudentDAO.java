@@ -60,7 +60,7 @@ public class JDBCStudentDAO implements StudentDAO{
 	@Override
 	public List<Student> getStudentsbyClassId(int classId) {
 		List<Student> studentsByClass = new ArrayList<>();
-		String sqlStudentsByClass = "SELECT student_id, name, email, comments FROM student "
+		String sqlStudentsByClass = "SELECT student.student_id, student.name, email, comments FROM student "
 									+ "JOIN class_student ON class_student.student_id = student.student_id "
 									+ "JOIN class ON class.class_id = class_student.class_id "
 									+ "WHERE class.class_id = ?";

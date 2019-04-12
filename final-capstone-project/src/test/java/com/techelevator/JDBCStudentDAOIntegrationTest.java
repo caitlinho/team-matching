@@ -74,6 +74,7 @@ public class JDBCStudentDAOIntegrationTest extends DAOIntegrationTest {
 		assertEquals(student.getComment(), actual.getComment());
 	}
 
+
 	private Student getExampleStudent(int studentId, String name, String email, String comments) {
 		Student theStudent = new Student();
 		theStudent.setStudentId(studentId);
