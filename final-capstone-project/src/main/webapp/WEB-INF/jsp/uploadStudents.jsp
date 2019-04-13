@@ -2,7 +2,7 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
- <form method="POST" action="uploadFile" enctype="multipart/form-data">
+ <form method="POST" action="${uploadFile}" enctype="multipart/form-data">
     File to upload: <input type="file" name="file" >
     <br />
     <input type="hidden" name="CSRF_TOKEN" value="${CSRF_TOKEN}" />

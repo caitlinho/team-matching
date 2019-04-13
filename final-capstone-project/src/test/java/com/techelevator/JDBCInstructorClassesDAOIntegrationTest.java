@@ -102,6 +102,11 @@ public class JDBCInstructorClassesDAOIntegrationTest extends DAOIntegrationTest 
 					+ "VALUES (?, ?)";
 		jdbcTemplate.update(sql, instructorId, classId);
 	}
+	
+	private void clearClassTable() {
+		String truncateClassTableSql = "DELETE FROM class";
+		jdbcTemplate.update(truncateClassTableSql);
+	}
  
 
 }
