@@ -11,7 +11,7 @@ body {
   height: auto;
   font-family: sans-serif;
   color: rgba(255, 255, 255, 0.4);
-  background-image: url("/img/student.jpg");
+  background-image: url("/img/read.jpg");
   background-size: cover;
 }
 
@@ -30,7 +30,7 @@ body {
 
 #main-ul a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 #main-ul li:hover {
