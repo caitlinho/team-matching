@@ -24,25 +24,7 @@ public class JDBCStudentDAOIntegrationTest extends DAOIntegrationTest {
 		clearStudentTable();
 	}
 
-	@Test
-	public void add_student_list_adds_correct_amount_of_students() {
-		// Arrange
-		Student student1 = getExampleStudent(1, "Dominick Hemphill", "dhemp@gmail.com", "smiles on smiles.");
-		Student student2 = getExampleStudent(2, "Kerry Lindsey", "kl@gmail.com", "tuna cat tuna cat does whatever tuna cat does.");
-		Student student3 = getExampleStudent(3, "Georgia Sutter", "ga@gmail.com", "bod for days");
-		
-		List<Student> studentList = new ArrayList<>();
-		studentList.add(student1);
-		studentList.add(student2);
-		studentList.add(student3);
-		
-		//Act
-		dao.addStudentList(studentList);
-		int size = jdbcTemplate.queryForObject("SELECT COUNT(name) FROM student", Integer.class);
 
-		// Assert
-		assertEquals(3, size);
-	}
 
 	@Test
 	public void get_student_by_id_returns_one_student() {

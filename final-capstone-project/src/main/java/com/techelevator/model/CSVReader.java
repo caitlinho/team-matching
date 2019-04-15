@@ -14,7 +14,6 @@ import java.util.List;
 
 public class CSVReader {
 	
-    private static final String SAMPLE_CSV_FILE_PATH = "./StudentList.csv";
     
     public List<Student> readFile(File file) throws IOException {
     	
