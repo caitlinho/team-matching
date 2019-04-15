@@ -23,7 +23,7 @@ public class CSVReader {
         try (
         		Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
-                        .withHeader("Name", "Email", "Phone", "Comment")
+                        .withHeader("studentId", "Name", "Email", "Comment")
                         .withIgnoreHeaderCase()
                         .withTrim());
         ) {

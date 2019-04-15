@@ -10,8 +10,8 @@
 		<input type="text" name="name">
 		<label for="email">Student's Email</label>
 		<input type="text" name="email">
-		<label for="comments">Comments</label>
-		<input type="text" name="comments">
+		<label for="comment">Comments</label>
+		<input type="text" name="comment">
 		<input type="submit" name="addStudentSubmit" value="Submit">
 	</form>
 </div>
