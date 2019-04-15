@@ -32,14 +32,14 @@
 		<c:forEach var="student" items="${studentsByClass}">
 			<tr>
 				<td>
-					<c:url var="student" value="/users/${userName}/${classId}/${student.id}" />
+					<c:url var="student" value="/users/${userName}/${classId}/${student.studentId}" />
 					<a href="${student}">${student.name}</a>
 				</td>
 				<td>
 					<c:out value="${student.email}" />
 				</td>
 				<td>
-					<c:out value="${student.comments}" />
+					<c:out value="${student.comment}" />
 				</td>
 				<td>
 					<c:if test="${student.active} == true"> {

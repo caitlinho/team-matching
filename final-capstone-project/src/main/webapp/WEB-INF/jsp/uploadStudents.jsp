@@ -2,7 +2,6 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
-
 <head>
 <c:url var="Image" value="/img/student.jpg" />
 <body style="background-image: url(${Image});">
@@ -13,7 +12,7 @@
 
 
 <div class="body"> 
-<form method="POST" action="uploadFile" enctype="multipart/form-data">
+ <form method="POST" action="${uploadFile}" enctype="multipart/form-data">
     File to upload: <input type="file" name="file" >
     <br />
     <input class="input"type="hidden" name="CSRF_TOKEN" value="${CSRF_TOKEN}" />

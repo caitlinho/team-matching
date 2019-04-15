@@ -98,4 +98,27 @@ SELECT * FROM app_user
 INSERT INTO app_user (id, user_name, password, role, salt) VALUES (DEFAULT, 'blauvray', '!CodingRules1', 'instructor')
 UPDATE student SET name = ?, email = ?, comments = ? WHERE student_id = ?
 
-INSERT INTO student (student_id, name, email, comments) VALUES (DEFAULT, 'Caitlin Ho', 'cho@gmail.com', 'akdflakd');
+INSERT INTO student (student_id, name, email, comments) VALUES (DEFAULT, 'Caitlin Ho', 'cho@gmail.com', 'akdflakd') RETURNING student_id;
+DELETE FROM student;
+
+
+UPDATE student SET name = ?, email = ?, comments = ? WHERE student_id = ?
+SELECT * From student
+DELETE FROM student WHERE student_id = 4;
+
+
+CREATE TABLE pair 
+(student_name varchar(255) not null, 
+second_student varchar(255) not null);
+
+CREATE TABLE students_to_pair 
+(student_name varchar(255) not null);
+
+
+INSERT INTO students_to_pair (student_name) VALUES ('a');
+INSERT INTO students_to_pair (student_name) VALUES ('b');
+INSERT INTO students_to_pair (student_name) VALUES ('c');
+INSERT INTO students_to_pair (student_name) VALUES ('d');
+INSERT INTO students_to_pair (student_name) VALUES ('e');
+INSERT INTO students_to_pair (student_name) VALUES ('f');
+INSERT INTO students_to_pair (student_name) VALUES ('g');
