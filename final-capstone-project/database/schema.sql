@@ -27,16 +27,14 @@ comments text);
 
 create table matches
 (match_id serial primary key,
+student_id_1 int not null,
+student_id_2 int not null,
+student_id_3 int,
 size int not null,
 week int not null,
 count int not null);
 
-create table student_matches
-(student_id int not null,
-match_id int not null,
 
-constraint fk_student_macthes_match_id foreign key (match_id) references matches(match_id),
-constraint fk_student_matches_student_id foreign key (student_id) references student(student_id));
 
 create table app_user_class
 (id int not null,
