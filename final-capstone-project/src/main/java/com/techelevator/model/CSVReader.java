@@ -14,14 +14,13 @@ import java.util.List;
 
 public class CSVReader {
 	
-    private static final String SAMPLE_CSV_FILE_PATH = "./StudentList.csv";
     
     public List<Student> readFile(File file) throws IOException {
     	
     	List<Student> studentList = new ArrayList<>();
 
         try (
-        		Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
+        		Reader reader = Files.newBufferedReader(file.toPath());
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                         .withHeader("studentId", "Name", "Email", "Comment")
                         .withIgnoreHeaderCase()

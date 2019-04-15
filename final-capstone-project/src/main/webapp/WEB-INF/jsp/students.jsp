@@ -12,6 +12,7 @@
 		<a href="${addStudent}">Add Student to Class</a>
 	</div>
 	
+	
 	<table class="students">
 		<tr>
 			<th>Name</th>
@@ -19,11 +20,14 @@
 			<th>Comments</th>
 			<th>Active</th>
 		</tr>
+		
+
+		
 		<c:forEach var="student" items="${studentsByClass}">
 			<tr>
 				<td>
-					<c:url var="student" value="/users/${userName}/${classId}/${student.studentId}" />
-					<a href="${student}">${student.name}</a>
+					<c:url var="studentUrl" value="/users/${userName}/${classId}/${student.studentId}" />
+					<a href="${studentUrl}">${student.name}</a>
 				</td>
 				<td>
 					<c:out value="${student.email}" />

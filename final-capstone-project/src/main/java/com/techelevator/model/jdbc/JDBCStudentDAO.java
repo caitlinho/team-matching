@@ -23,18 +23,6 @@ public class JDBCStudentDAO implements StudentDAO{
 	public JDBCStudentDAO (DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
-	@Override
-	public void addStudentList(List<Student> studentList) {
-		String sqlToAddStudent = "INSERT INTO student (student_id, name, email, comments) VALUES (DEFAULT, ?, ?, ?) "
-								+ "RETURNING student_id;";
-		for (int index = 0; index < studentList.size(); index++) {
-		int studentId = jdbcTemplate.queryForObject(sqlToAddStudent, Integer.class, studentList.get(index).getName(), 
-																					studentList.get(index).getEmail(), 
-																					studentList.get(index).getComment());
-		studentList.get(index).setStudentId(studentId);
-		}
-	}
 
 	@Override
 	public Student getStudentById(int studentId) {
@@ -81,9 +69,9 @@ public class JDBCStudentDAO implements StudentDAO{
 									+ "JOIN class ON class.class_id = class_student.class_id "
 									+ "WHERE class.class_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlStudentsByClass, classId);
-		if(results.next()) {
-			Student s = new Student();
-			studentsByClass.add(s);
+		while(results.next()) {
+
+			studentsByClass.add(mapRowToStudent(results));
 		}
 		
 		return studentsByClass;
