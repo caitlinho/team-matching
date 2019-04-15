@@ -39,9 +39,16 @@ public class StudentController {
 		return "students";
 	}
 	
+	@RequestMapping(path="/users/{userName}/{classId}/{studentId}", method=RequestMethod.GET)
+	public String showStudentsOfOneClass(@PathVariable String userName, @PathVariable int classId, @PathVariable int studentId) {
+		
+		return "editStudent";
+	}
+	
 	@RequestMapping(path="/users/{userName}/{classId}", method=RequestMethod.POST)
 	public String selectingStudentToEdit(@PathVariable String userName, @PathVariable int classId, 
-														@RequestParam int studentId, ModelMap map) {
+														@RequestParam int studentId, @Valid @ModelAttribute("addStudent")Student student, BindingResult result) {
+		studentDao.editStudent(student);
 		
 		return "redirect:/users/{userName}/{classId}/"+studentId;
 	}
