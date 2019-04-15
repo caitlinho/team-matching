@@ -23,12 +23,15 @@ public class CSVReader {
         try (
         		Reader reader = Files.newBufferedReader(file.toPath());
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
+<<<<<<< HEAD
                         .withHeader("Id", "Name", "Email", "Comment")
+=======
+                        .withHeader("studentId", "Name", "Email", "Comment")
+>>>>>>> 32ce65feffaf624267c8039c048d071ee9a721e2
                         .withIgnoreHeaderCase()
                         .withTrim());
         ) {
             for (CSVRecord csvRecord : csvParser) {
-//                studentList.addAll(csvRecord);
                 // Accessing Values by Column Index
             	Student student = new Student();
                 String id = csvRecord.get(0);
@@ -39,17 +42,12 @@ public class CSVReader {
                 student.setComment(csvRecord.get(3));
               
                 studentList.add(student);
-            }
-            
-        
-            
+            }       
         }
            catch (IOException e) {
         	   throw e;
            }
         
-		return studentList;
-        
-    }
-         
+		return studentList;  
+    }     
 }

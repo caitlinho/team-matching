@@ -59,9 +59,11 @@ public class JDBCStudentDAO implements StudentDAO{
 	
 	@Override
 	public void addStudent(Student student, int classId) {	
-		String sqlAddStudent = "INSERT INTO student (name, email, comments) VALUES (?, ?, ?)";
-		jdbcTemplate.queryForRowSet(sqlAddStudent, student.getName(), student.getEmail(), student.getEmail());
-		insertIntoStudentClassJoinTable(classId, student.getStudentId());
+		String sqlAddStudent = "INSERT INTO student (student_id, name, email, comments) VALUES (DEFAULT, ?, ?, ?) RETURNING student_id";
+		int studentId = jdbcTemplate.queryForObject(sqlAddStudent, Integer.class, student.getName(), student.getEmail(), student.getComment());
+		student.setStudentId(studentId);
+	
+		insertIntoStudentClassJoinTable(classId, studentId);
 	}
 	
 	@Override

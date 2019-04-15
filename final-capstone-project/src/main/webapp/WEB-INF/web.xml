@@ -19,10 +19,10 @@
     <url-pattern>*.gif</url-pattern>
   </servlet-mapping>
 
-    <filter>
+<!--     <filter>
   	<filter-name>authFilter</filter-name>
   	<filter-class>com.techelevator.security.AuthorizationFilter</filter-class>
-  </filter>
+  </filter> -->
   
   <!--
   <filter>
@@ -31,10 +31,10 @@
   </filter>
     -->
     
-  <filter-mapping>
+<!--   <filter-mapping>
   	<filter-name>authFilter</filter-name>
   	<url-pattern>/users/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   
    <!--
   <filter-mapping>
