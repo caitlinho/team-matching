@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.techelevator.model.CSVReader;
 import com.techelevator.model.InstructorClassesDAO;
+import com.techelevator.model.Student;
+import com.techelevator.model.StudentDAO;
 import com.techelevator.model.User;
 
 @Controller
@@ -30,6 +34,9 @@ public class FileUploadController {
 
 	@Autowired
 	ServletContext servletContext;
+	
+	@Autowired
+	StudentDAO studentDao;
 	
 	@RequestMapping(path= {"/users/{userName}/{classId}/upload"}, method=RequestMethod.GET)
 	public String showUploadForm(@PathVariable String userName, @PathVariable int classId, ModelMap map) {
@@ -45,7 +52,12 @@ public class FileUploadController {
 		File fileConverted = createImage(file, fileName);
 	
 		CSVReader reader = new CSVReader();
-		reader.readFile(fileConverted);
+		List<Student> studentList = reader.readFile(fileConverted);
+		
+		for (Student student: studentList) {
+			studentDao.addStudent(student, classId);
+		}
+		
 			
 		map.addAttribute("message", "uploaded to: " + fileName);
 		return "redirect:/users/"+userName+"/"+classId;
