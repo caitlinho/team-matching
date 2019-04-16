@@ -12,6 +12,7 @@
 	<h1>Students</h1>
 
 	<div class="navBody">
+<<<<<<< HEAD
 		<div class="studentNav">
 			<c:url var="uploadStudents"
 				value="/users/${userName}/${classId}/upload" />
@@ -22,6 +23,20 @@
 				value="/users/${userName}/${classId}/addStudent" />
 			<a href="${addStudent}">Add Student to Class</a>
 		</div>
+=======
+	<div class="studentNav">
+		<c:url var="uploadStudents" value="/users/${userName}/${classId}/upload" />
+		<a href="${uploadStudents}">Upload Student List</a>
+	</div>
+	<div class="studentNav">	
+		<c:url var="addStudent" value="/users/${userName}/${classId}/addStudent" />
+		<a href="${addStudent}">Add Student to Class</a>
+	</div>
+	<div class="studentNav">	
+		<c:url var="matchStudents" value="/users/${userName}/${classId}/pairs" />
+		<a href="${matchStudents}">Pair Students</a>
+	</div>
+>>>>>>> 5cb48b27d5d7634cff04393b4ccd5827fce9eafc
 	</div>
 
 	<!-- <div> -->

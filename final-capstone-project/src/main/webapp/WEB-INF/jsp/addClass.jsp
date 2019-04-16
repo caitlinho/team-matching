@@ -24,6 +24,21 @@
      	<label for="addClass input" class="lable">Class Name: </label> 
 		<input type="text" name="name">
 		<button type="submit" name="addClassSubmit" class="btn btn-primary btn-block btn-large">Submit</button>
+		<label for="weekOfMatch">Week Number: </label>
+		<input type="text" name="weekOfMatch">
+		<label for="size">Size of Group: </label>
+		<select name="size">
+			<option value="2">2</option>
+			<option value="3">3</option>
+		</select>
+		<label for="countOfMatch">Identical Pair Limit</label>
+		<select name="countOfMatch">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		</select>
 	</form>
 </div>
 
