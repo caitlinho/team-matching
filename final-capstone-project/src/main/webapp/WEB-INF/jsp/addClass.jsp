@@ -9,6 +9,8 @@
 <c:url var="stylesheetHref" value="/css/addClass.css" />
 <link rel="stylesheet" href="${stylesheetHref}">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<c:url var="Image" value="/img/team.jpg" />
+<body style="background-image: url(${Image});">
 </head>
 
 
@@ -33,7 +35,7 @@
 		<select name="countOfMatch">
 			<option value ="0">0</option>
 			<option value="1">1</option>
-			<option value ="2">2</option>
+			<option value="2">2</option>
 			<option value="3">3</option>
 			<option value="4">4</option>
 			<option value="5">5</option>

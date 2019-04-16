@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <head>
-<c:url var="Image" value="/img/team.jpg" />
+<c:url var="Image" value="/img/code.jpg" />
 <body style="background-image: url(${Image});">
 <c:url var="stylesheetHref" value="/css/dashboard.css" />
 <link rel="stylesheet" href="${stylesheetHref}">
@@ -26,4 +26,4 @@
 	
 </div>
 
-<c:import url="/WEB-INF/jsp/footer.jsp" />
+ <c:import url="/WEB-INF/jsp/footer.jsp" /> 
