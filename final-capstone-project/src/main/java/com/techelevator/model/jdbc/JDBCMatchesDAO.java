@@ -26,14 +26,16 @@ private JdbcTemplate jdbcTemplate;
 
 
 	@Override
-	public List<Matches> getMatchesbyClassId(int classId) {
+	public List<Matches> getMatchesbyUsername(String username) {
 		List<Matches> matchesByClass = new ArrayList<>();
 		String sqlMatchesByClass = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
 								 + "JOIN student ON student.student_id = matches.student_id_1 " 
 								 + "JOIN class_student ON class_student.student_id = student.student_id "
 								 + "JOIN class ON class.class_id = class_student.class_id " 
-								 + "WHERE class_id = ?";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatchesByClass, classId);
+								 + "JOIN app_user_class ON app_user_class.class_id = class.class_id "
+								 + "JOIN app_user ON app_user.id = app_user_class.id"
+								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatchesByClass, username);
 		
 		while(results.next()) {
 			matchesByClass.add(mapRowToMatch(results));
