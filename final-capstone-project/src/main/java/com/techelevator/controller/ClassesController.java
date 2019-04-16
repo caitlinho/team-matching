@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.techelevator.model.InstructorClasses;
 import com.techelevator.model.InstructorClassesDAO;
+import com.techelevator.model.Matches;
 import com.techelevator.model.User;
 import com.techelevator.model.UserDAO;
 
@@ -44,7 +45,8 @@ public class ClassesController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/addClass", method=RequestMethod.POST)
-	public String addClass(@PathVariable String userName, ModelMap map, @Valid @ModelAttribute("addClass") InstructorClasses newClass, BindingResult result, HttpSession session) {
+	public String addClass(@PathVariable String userName, ModelMap map, @Valid @ModelAttribute("addClass") InstructorClasses newClass, BindingResult result, HttpSession session,
+			@RequestParam("weekOfMatch") int week, @RequestParam("size") int size, @RequestParam("countOfMatch") int countOfMatch) {
 		
 		if(result.hasErrors()) {
 			return "addClass";
@@ -52,7 +54,6 @@ public class ClassesController {
 		User user = (User) session.getAttribute("currentUser");
 		int id = user.getId();
 		instructorClassesDAO.addClass(newClass, id);
-		String a = "redirect:/users/"+userName+"/dashboard";
-		return a;
+		return "redirect:/users/"+userName+"/dashboard";
 	}
 }
