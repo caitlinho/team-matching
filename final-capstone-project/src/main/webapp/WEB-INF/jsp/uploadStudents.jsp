@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<c:import url="/WEB-INF/jsp/header.jsp" />
+<c:import url="/WEB-INF/jsp/navbar.jsp" />
 
 <head>
-<c:url var="Image" value="/img/student.jpg" />
+<c:url var="Image" value="/img/read.jpg" />
 <body style="background-image: url(${Image});">
 <c:url var="stylesheetHref" value="/css/uploadStudent.css" />
 <link rel="stylesheet" href="${stylesheetHref}">
