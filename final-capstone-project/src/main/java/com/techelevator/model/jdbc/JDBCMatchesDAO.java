@@ -28,16 +28,16 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Matches> getMatchesbyUsername(String username) {
 		List<Matches> matchesByClass = new ArrayList<>();
-<<<<<<< HEAD
-		String sqlMatchesByClass = "SELECT c.name, s1.name, s2.name, m.week, m.count_of_matches "
-								 + "FROM match_ex m "
-								 + "JOIN student s1 ON m.student_id_1 = s1.student_id "
-								 + "JOIN student s2 ON m.student_id_2 = s2.student_id "
-								 + "JOIN class_student cs ON cs.student_id = s1.student_id "
-								 + "JOIN class c ON c.class_id = cs.class_id "
-								 + "WHERE c.class_id = 3;";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatchesByClass, classId);
-=======
+//<<<<<<< HEAD
+//		String sqlMatchesByClass = "SELECT c.name, s1.name, s2.name, m.week, m.count_of_matches "
+//								 + "FROM match_ex m "
+//								 + "JOIN student s1 ON m.student_id_1 = s1.student_id "
+//								 + "JOIN student s2 ON m.student_id_2 = s2.student_id "
+//								 + "JOIN class_student cs ON cs.student_id = s1.student_id "
+//								 + "JOIN class c ON c.class_id = cs.class_id "
+//								 + "WHERE c.class_id = 3;";
+		
+//=======
 		String sqlMatchesByClass = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
 								 + "JOIN student ON student.student_id = matches.student_id_1 " 
 								 + "JOIN class_student ON class_student.student_id = student.student_id "
@@ -45,8 +45,8 @@ private JdbcTemplate jdbcTemplate;
 								 + "JOIN app_user_class ON app_user_class.class_id = class.class_id "
 								 + "JOIN app_user ON app_user.id = app_user_class.id"
 								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
+
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatchesByClass, username);
->>>>>>> 361d0080e8ce90f7ad407168b292939f4632e7ef
 		
 		while(results.next()) {
 			matchesByClass.add(mapRowToMatch(results));
