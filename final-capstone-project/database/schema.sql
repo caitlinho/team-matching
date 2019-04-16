@@ -34,9 +34,13 @@ size int not null,
 week int not null,
 count_of_matches int not null,
 
+<<<<<<< HEAD
 constraint fk_matches foreign key (student_id_1) references student(student_id),
 foreign key (student_id_2) references student(student_id),
 foreign key (student_id_3) references student(student_id));
+=======
+
+>>>>>>> b1aaabfd2536e1e2f8ce44a705a882367c9367cf
 
 create table app_user_class
 (id int not null,

@@ -20,6 +20,10 @@
 		<c:url var="addStudent" value="/users/${userName}/${classId}/addStudent" />
 		<a href="${addStudent}">Add Student to Class</a>
 	</div>
+	<div class="studentNav">	
+		<c:url var="matchStudents" value="/users/${userName}/${classId}/pairs" />
+		<a href="${matchStudents}">Pair Students</a>
+	</div>
 	</div>
 	
 	
