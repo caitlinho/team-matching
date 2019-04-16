@@ -122,3 +122,45 @@ INSERT INTO students_to_pair (student_name) VALUES ('d');
 INSERT INTO students_to_pair (student_name) VALUES ('e');
 INSERT INTO students_to_pair (student_name) VALUES ('f');
 INSERT INTO students_to_pair (student_name) VALUES ('g');
+
+INSERT INTO student (name, email, comments) VALUES (?, ?, ?)
+INSERT INTO class_student(class_id, student_id) 
+VALUES (?, ?)
+
+
+SELECT student.student_id, student.name, email, comments FROM student 
+JOIN class_student ON class_student.student_id = student.student_id 
+JOIN class ON class.class_id = class_student.class_id 
+WHERE class.class_id = 3
+
+CREATE TABLE match_ex
+(match_id int not null,
+student_id_1 int not null,
+student_id_2 int not null,
+student_id_3 int,
+size int not null,
+week int not null,
+count_of_matches int not null,
+
+constraint fk_match_ex foreign key (student_id_1) references student(student_id),
+foreign key (student_id_2) references student(student_id),
+foreign key (student_id_3) references student(student_id));
+
+SELECT * from match_ex
+
+SELECT match_ex.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM match_ex
+JOIN student ON student.student_id = match_ex.student_id_1  
+WHERE student_id = ?
+
+SELECT * From student
+INSERT INTO student_match_ex (match_id, student_id) VALUES (?, ?);
+
+CREATE TABLE student_match_ex (match_id int not null, student_id int not null);
+INSERT INTO match_ex (match_id, student_id_1, student_id_2, week, size, count_of_matches) 
+VALUES (1, 13, 14, 1, 2, 1) RETURNING match_id;
+
+SELECT match_ex.match_id, student.name, student.name, size, week, count_of_matches FROM match_ex 
+JOIN student ON student.student_id = match_ex.student_id_1 WHERE match_id = 1;
+
+
+
