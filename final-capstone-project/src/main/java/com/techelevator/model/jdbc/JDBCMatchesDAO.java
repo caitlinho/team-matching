@@ -28,11 +28,13 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Matches> getMatchesbyClassId(int classId) {
 		List<Matches> matchesByClass = new ArrayList<>();
-		String sqlMatchesByClass = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
-								 + "JOIN student ON student.student_id = matches.student_id_1 " 
-								 + "JOIN class_student ON class_student.student_id = student.student_id "
-								 + "JOIN class ON class.class_id = class_student.class_id " 
-								 + "WHERE class_id = ?";
+		String sqlMatchesByClass = "SELECT c.name, s1.name, s2.name, m.week, m.count_of_matches "
+								 + "FROM match_ex m "
+								 + "JOIN student s1 ON m.student_id_1 = s1.student_id "
+								 + "JOIN student s2 ON m.student_id_2 = s2.student_id "
+								 + "JOIN class_student cs ON cs.student_id = s1.student_id "
+								 + "JOIN class c ON c.class_id = cs.class_id "
+								 + "WHERE c.class_id = 3;";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatchesByClass, classId);
 		
 		while(results.next()) {
@@ -58,9 +60,10 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Matches> getMatchesbyStudentId(int studentId) {
 		List<Matches> matchesByStudent = new ArrayList<>();
-		String sqlMatches = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches "  
-						  + "JOIN student ON student.student_id = matches.student_id_1 "  
-						  + "WHERE student_id = ?";
+		String sqlMatches = "SELECT s1.name, s2.name, m.week, m.count_of_matches FROM matches m "  
+						  + "JOIN student s1 ON m.student_id_1 = s1.student_id "  
+						  + "JOIN student s2 ON m.student_id_2 = s2.student_id "  
+						  + "WHERE student_id_1 = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatches, studentId);
 		
 		while(results.next()) {
