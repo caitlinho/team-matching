@@ -21,7 +21,7 @@ public class CSVReader {
     	List<Student> studentList = new ArrayList<>();
 
         try (
-        		Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
+        		Reader reader = Files.newBufferedReader(file.toPath());
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                         .withHeader("StudentId", "Name", "Email", "Comment")
                         .withIgnoreHeaderCase()
