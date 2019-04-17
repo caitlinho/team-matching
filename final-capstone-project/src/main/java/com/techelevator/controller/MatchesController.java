@@ -24,9 +24,6 @@ import com.techelevator.model.StudentDAO;
 @SessionAttributes("currentUser")
 public class MatchesController {
 	
-	@Autowired 
-	RandomGeneratorDAO randomGeneratorDao;
-	
 	@Autowired
 	MatchesDAO matchesDao;
 	
@@ -68,16 +65,20 @@ public class MatchesController {
 //			}
 		if(shuffledMatches.getSize() == 2) {
 			for(int i = 0; i < studentsToMatch.size(); i += 2) {
-				shuffledMatches.setStudentId1(i);
-				shuffledMatches.setStudentId2(i + 1);
+				shuffledMatches = new Matches();
+				shuffledMatches.setWeek(week);
+				shuffledMatches.setSize(size);
+				shuffledMatches.setCount(countOfMatches);
+				shuffledMatches.setStudentId1(studentsToMatch.get(i).getStudentId());
+				shuffledMatches.setStudentId2(studentsToMatch.get(i + 1).getStudentId());
 				matchesDao.compareMatches(shuffledMatches);
 				listOfMatches.add(shuffledMatches);
 			}
 		} else {
-			for(int i = 1; i < studentsToMatch.size(); i += 3) {
-				shuffledMatches.setStudentId1(i);
-				shuffledMatches.setStudentId2(i + 1);
-				shuffledMatches.setStudentId3(i + 2);
+			for(int i = 0; i < studentsToMatch.size(); i += 3) {
+				shuffledMatches.setStudentId1(studentsToMatch.get(i).getStudentId());
+				shuffledMatches.setStudentId2(studentsToMatch.get(i + 1).getStudentId());
+				shuffledMatches.setStudentId3(studentsToMatch.get(i + 2).getStudentId());
 				matchesDao.compareMatches(shuffledMatches);
 				listOfMatches.add(shuffledMatches);
 			}
