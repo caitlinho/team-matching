@@ -12,11 +12,12 @@
 			<th>Week</th>
 			<th>Team Members</th>
 		</tr>
-		<c:forEach var="team" items="${forEachVariable}">
+		<c:forEach var="team" items="${newMatches}">
 			<tr>
 				<td>${InstructorClass.name}</td>
 				<td>${team.week}</td>
-				<td>${team.NAMES}</td>
+				<td>${team.studentId1}</td>
+				<td>${team.studentId2}</td>
 			</tr>
 		</c:forEach>
 	</table>
