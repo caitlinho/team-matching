@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.techelevator.model.InstructorClasses;
 import com.techelevator.model.InstructorClassesDAO;
-import com.techelevator.model.Matches;
 import com.techelevator.model.User;
-import com.techelevator.model.UserDAO;
 
 @Controller
 @SessionAttributes("currentUser")
@@ -26,9 +24,6 @@ public class ClassesController {
 
 	@Autowired
 	private InstructorClassesDAO instructorClassesDAO;
-	
-	@Autowired
-	private UserDAO userDao;
 	
 	@RequestMapping(path="/users/{userName}/dashboard", method=RequestMethod.GET)
 	public String viewDashboard(@PathVariable 

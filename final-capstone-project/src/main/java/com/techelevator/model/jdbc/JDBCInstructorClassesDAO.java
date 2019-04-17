@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.techelevator.model.InstructorClasses;
 import com.techelevator.model.InstructorClassesDAO;
-import com.techelevator.model.User;
 
 @Component
 public class JDBCInstructorClassesDAO implements InstructorClassesDAO{
