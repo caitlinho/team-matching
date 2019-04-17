@@ -156,8 +156,8 @@ SELECT * From student
 INSERT INTO student_match_ex (match_id, student_id) VALUES (?, ?);
 
 CREATE TABLE student_match_ex (match_id int not null, student_id int not null);
-INSERT INTO match_ex (match_id, student_id_1, student_id_2, week, size, count_of_matches) 
-VALUES (1, 13, 14, 1, 2, 1) RETURNING match_id;
+INSERT INTO match_ex (match_id, student_id_1, student_id_2, week, size, count_of_matches)
+VALUES (3, ?, ?, ?, ?, ?) RETURNING match_id;
 
 SELECT match_ex.match_id, 
         (SELECT name FROM student WHERE student_id = ?), 
@@ -172,18 +172,38 @@ SELECT s1.name, s2.name, m.week, m.count_of_matches
 FROM match_ex m 
 JOIN student s1 ON m.student_id_1 = s1.student_id
 JOIN student s2 ON m.student_id_2 = s2.student_id
-WHERE student_id_1 = 13
+WHERE student_id_1 = 12 OR student_id_2 = 12
  
-SELECT c.name, s1.name, s2.name, m.week, m.count_of_matches, 
+SELECT c.name, s1.name, s2.name, m.week, m.count_of_matches 
 FROM match_ex m 
 JOIN student s1 ON m.student_id_1 = s1.student_id
 JOIN student s2 ON m.student_id_2 = s2.student_id
 JOIN class_student cs ON cs.student_id = s1.student_id
 JOIN class c ON c.class_id = cs.class_id
-WHERE student_id_1 = 13
+WHERE c.class_id = 3;
 
-"SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
-								 + "JOIN student ON student.student_id = matches.student_id_1 " 
-								 + "JOIN class_student ON class_student.student_id = student.student_id "
-								 + "JOIN class ON class.class_id = class_student.class_id " 
-								 + "WHERE class_id = ?";
+SELECT * FROM match_Ex
+SELECT * FROM  class_student
+
+
+
+--SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches 
+--JOIN student ON student.student_id = matches.student_id_1 
+--JOIN class_student ON class_student.student_id = student.student_id 
+--JOIN class ON class.class_id = class_student.class_id  
+--JOIN app_user_class ON app_user_class.class_id = class.class_id 
+--JOIN app_user ON app_user.id = app_user_class.id
+--WHERE app_user.user_name = ? ORDER BY class.name DESC;
+
+SELECT s1.name, s2.name, match_ex.week, c.name, match_ex.count_of_matches
+FROM match_ex 
+JOIN student s1 ON s1.student_id = match_ex.student_id_1
+JOIN student s2 ON s2.student_id = match_ex.student_id_2
+JOIN class_student cs ON s1.student_id = cs.student_id
+JOIN class c ON c.class_id = cs.class_id 
+JOIN app_user_class auc ON auc.class_id = c.class_id
+JOIN app_user au ON au.id = auc.id
+WHERE au.id = 1
+ORDER BY c.name ASC
+
+SELECT * from app_user_class

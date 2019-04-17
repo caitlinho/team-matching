@@ -12,18 +12,6 @@
 	<h1>Students</h1>
 
 	<div class="navBody">
-<<<<<<< HEAD
-		<div class="studentNav">
-			<c:url var="uploadStudents"
-				value="/users/${userName}/${classId}/upload" />
-			<a href="${uploadStudents}">Upload Student List</a>
-		</div>
-		<div class="studentNav">
-			<c:url var="addStudent"
-				value="/users/${userName}/${classId}/addStudent" />
-			<a href="${addStudent}">Add Student to Class</a>
-		</div>
-=======
 	<div class="studentNav">
 		<c:url var="uploadStudents" value="/users/${userName}/${classId}/upload" />
 		<a href="${uploadStudents}">Upload Student List</a>
@@ -32,11 +20,14 @@
 		<c:url var="addStudent" value="/users/${userName}/${classId}/addStudent" />
 		<a href="${addStudent}">Add Student to Class</a>
 	</div>
+	<div class="studentNav">
+		<c:url var="editStudent" value="/users/${userName}/${classId}/editStudent" />
+		<a href="${editStudent}">Edit Student</a>
+	</div>
 	<div class="studentNav">	
 		<c:url var="matchStudents" value="/users/${userName}/${classId}/pairs" />
 		<a href="${matchStudents}">Pair Students</a>
 	</div>
->>>>>>> 5cb48b27d5d7634cff04393b4ccd5827fce9eafc
 	</div>
 
 	<!-- <div> -->
@@ -45,7 +36,6 @@
 			<th>Name</th>
 			<th>Email</th>
 			<th>Comments</th>
-			<th>Active</th>
 		</tr>
 		<!-- </div> -->
 
@@ -57,11 +47,6 @@
 						href="${studentUrl}">${student.name}</a></td>
 					<td><c:out value="${student.email}" /></td>
 					<td><c:out value="${student.comment}" /></td>
-					<td><c:if test="${student.active} == true"> {
-						<c:out value="Active" />
-						</c:if> <c:if test="${student.active} == false"> {
-						<c:out value="Inactive" />
-						</c:if></td>
 				</tr>
 			</c:forEach>
 	</table>

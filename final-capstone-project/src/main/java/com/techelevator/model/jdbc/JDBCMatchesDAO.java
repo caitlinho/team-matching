@@ -88,12 +88,21 @@ private JdbcTemplate jdbcTemplate;
 	}
 	
 	@Override
-	public void compareMatches(Matches match) {
+	public boolean compareMatches(Matches match) {
+		boolean matchBoolean = true;
 		if (match.getSize() == 2) {
 			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
 			SqlRowSet sameMatch = jdbcTemplate.queryForRowSet(sql, match.getStudentId1(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1());
 			if (sameMatch != null) {
-				updateCountForPairs(match.getStudentId1(), match.getStudentId2());
+				if (countOfMatchesForPairs(match.getStudentId1(), match.getStudentId2()) < match.getCount()) {
+					updateCountForPairs(match.getStudentId1(), match.getStudentId2());
+					matchBoolean = true;
+				}
+				else {
+					
+					matchBoolean = false;
+				}
+				
 			}
 			else {
 				saveMatchesForPairs(match);
@@ -109,7 +118,13 @@ private JdbcTemplate jdbcTemplate;
 												match.getStudentId1(), match.getStudentId3(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1(), match.getStudentId3(),
 												match.getStudentId3(), match.getStudentId1(), match.getStudentId2(), match.getStudentId3(), match.getStudentId2(), match.getStudentId1());
 			if (sameMatch != null) {
-				updateCountForTriples(match.getStudentId1(), match.getStudentId2(), match.getStudentId3());
+				if (countOfMatchesForTriples(match.getStudentId1(), match.getStudentId2(), match.getStudentId3()) < match.getCount()) {
+				
+					updateCountForTriples(match.getStudentId1(), match.getStudentId2(), match.getStudentId3());
+					matchBoolean = true;
+				} else {
+					matchBoolean = false;
+				}
 			}
 			else {
 				saveMatchesForTriples(match);
@@ -117,7 +132,9 @@ private JdbcTemplate jdbcTemplate;
 				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId2());	
 				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId3());
 			}
+			
 		}
+		return matchBoolean;
 		
 	}
 	
@@ -158,6 +175,18 @@ private JdbcTemplate jdbcTemplate;
 																				matches.getWeek(),
 																				matches.getSize(),
 																				matches.getCount());
+	}
+	
+	private int countOfMatchesForPairs(int studentId1, int studentId2) {
+		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?";
+		int results = jdbcTemplate.queryForObject(sql, Integer.class, studentId1, studentId2, studentId2, studentId1);
+		return results;
+	}
+	
+	private int countOfMatchesForTriples(int studentId1, int studentId2, int studentId3) {
+		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?";
+		int results = jdbcTemplate.queryForObject(sql, Integer.class, studentId1, studentId2, studentId2, studentId1);
+		return results;
 	}
 	
 	private void updateCountForPairs(int studentId1, int studentId2) {
