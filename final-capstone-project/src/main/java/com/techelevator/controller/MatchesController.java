@@ -51,7 +51,7 @@ public class MatchesController {
 	public String generateMatches(@PathVariable String userName, @PathVariable int classId, @RequestParam("weekOfMatch") int week, @RequestParam("size") int size, @RequestParam("countOfMatch") int countOfMatches, ModelMap map) {
 		List<Student> studentsToMatch = studentDao.getStudentsbyClassId(classId);
 		studentsToId(studentsToMatch);
-		Collections.shuffle(studentsToMatch, new Random());
+		Collections.shuffle(studentsToMatch);
 		Matches shuffledMatches = new Matches();
 		List<Matches> listOfMatches = new ArrayList<>();
 		shuffledMatches.setWeek(week);
@@ -67,7 +67,7 @@ public class MatchesController {
 //				shuffledMatches.setStudentId3(i + 2);
 //			}
 		if(shuffledMatches.getSize() == 2) {
-			for(int i = 1; i < studentsToMatch.size(); i += 2) {
+			for(int i = 0; i < studentsToMatch.size(); i += 2) {
 				shuffledMatches.setStudentId1(i);
 				shuffledMatches.setStudentId2(i + 1);
 				matchesDao.compareMatches(shuffledMatches);
