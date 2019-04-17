@@ -9,15 +9,18 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.techelevator.model.Matches;
 import com.techelevator.model.MatchesDAO;
 import com.techelevator.model.Student;
 
+@Component
 public class JDBCMatchesDAO implements MatchesDAO{
 	
 private JdbcTemplate jdbcTemplate;
+	
 	
 	@Autowired
 	public JDBCMatchesDAO (DataSource dataSource) {
@@ -28,23 +31,24 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Matches> getMatchesbyUsername(String username) {
 		List<Matches> matchesByClass = new ArrayList<>();
-//<<<<<<< HEAD
-//		String sqlMatchesByClass = "SELECT c.name, s1.name, s2.name, m.week, m.count_of_matches "
-//								 + "FROM match_ex m "
-//								 + "JOIN student s1 ON m.student_id_1 = s1.student_id "
-//								 + "JOIN student s2 ON m.student_id_2 = s2.student_id "
-//								 + "JOIN class_student cs ON cs.student_id = s1.student_id "
-//								 + "JOIN class c ON c.class_id = cs.class_id "
-//								 + "WHERE c.class_id = 3;";
+//		String sqlMatchesByClass = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
+//								 + "JOIN student ON student.student_id = matches.student_id_1 " 
+//								 + "JOIN class_student ON class_student.student_id = student.student_id "
+//								 + "JOIN class ON class.class_id = class_student.class_id " 
+//								 + "JOIN app_user_class ON app_user_class.class_id = class.class_id "
+//								 + "JOIN app_user ON app_user.id = app_user_class.id"
+//								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
 		
-//=======
-		String sqlMatchesByClass = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
-								 + "JOIN student ON student.student_id = matches.student_id_1 " 
-								 + "JOIN class_student ON class_student.student_id = student.student_id "
-								 + "JOIN class ON class.class_id = class_student.class_id " 
-								 + "JOIN app_user_class ON app_user_class.class_id = class.class_id "
-								 + "JOIN app_user ON app_user.id = app_user_class.id"
-								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
+		String sqlMatchesByClass = "SELECT s1.name, s2.name, match_ex.week, c.name, match_ex.count_of_matches " 
+								+ "FROM match_ex " 
+								+ "JOIN student s1 ON s1.student_id = match_ex.student_id_1 "  
+								+ "JOIN student s2 ON s2.student_id = match_ex.student_id_2 "  
+								+ "JOIN class_student cs ON s1.student_id = cs.student_id " 
+								+ "JOIN class c ON c.class_id = cs.class_id " 
+								+ "JOIN app_user_class auc ON auc.class_id = c.class_id "  
+								+ "JOIN app_user au ON au.id = auc.id " 
+								+ "WHERE au.user_name = ? " 
+								+ "ORDER BY c.name ASC";
 
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatchesByClass, username);
 		
