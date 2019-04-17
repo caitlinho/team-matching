@@ -9,12 +9,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.techelevator.model.Matches;
 import com.techelevator.model.MatchesDAO;
 import com.techelevator.model.Student;
 
+@Component
 public class JDBCMatchesDAO implements MatchesDAO{
 	
 private JdbcTemplate jdbcTemplate;
@@ -74,8 +76,8 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public void compareMatches(Matches match) {
 		if (match.getSize() == 2) {
-			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) || (student_id_1 = ? AND student_id_2 = ?)";
-			Matches sameMatch = jdbcTemplate.queryForObject(sql, Matches.class, match.getStudentId1(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1());
+			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
+			SqlRowSet sameMatch = jdbcTemplate.queryForRowSet(sql, match.getStudentId1(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1());
 			if (sameMatch != null) {
 				updateCountForPairs(match.getStudentId1(), match.getStudentId2());
 			}
@@ -85,9 +87,9 @@ private JdbcTemplate jdbcTemplate;
 				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId2());	
 			}
 		} else {
-			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) || (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?) || "
-												   + "(student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) || (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?) || "
-												   + "(student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) || (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?)";
+			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) OR (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?) OR "
+												   + "(student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) OR (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?) OR "
+												   + "(student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) OR (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?)";
 			Matches sameMatch = jdbcTemplate.queryForObject(sql, Matches.class, 
 												match.getStudentId1(), match.getStudentId2(), match.getStudentId3(), match.getStudentId2(), match.getStudentId3(), match.getStudentId1(),
 												match.getStudentId1(), match.getStudentId3(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1(), match.getStudentId3(),
@@ -145,7 +147,7 @@ private JdbcTemplate jdbcTemplate;
 	}
 	
 	private void updateCountForPairs(int studentId1, int studentId2) {
-		String sql = "UPDATE matches SET count_of_matches = count_of_matches + 1 WHERE (student_id_1 = ? AND student_id_2 = ?) || (student_id_1 = ? AND student_id_2 = ?";
+		String sql = "UPDATE matches SET count_of_matches = count_of_matches + 1 WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
 		jdbcTemplate.update(sql, studentId1, studentId2, studentId2, studentId1);
 	}
 	

@@ -3,7 +3,7 @@
 <c:import url="/WEB-INF/jsp/navbar.jsp" />
 
 <div class="body">
-	<c:url var="generateMatch" value="/users/{userName}/{classId}/pairs" />
+	<c:url var="generateMatch" value="/users/${userName}/${classId}/pairs" />
 	<form action="${generateMatch}" method="POST">
 		<label for="weekOfMatch">Week Number: </label>
 		<input type="text" name="weekOfMatch">

@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.techelevator.model.Matches;
@@ -25,8 +26,10 @@ public class MatchesController {
 	
 	@Autowired 
 	RandomGeneratorDAO randomGeneratorDao;
+	
 	@Autowired
 	MatchesDAO matchesDao;
+	
 	@Autowired
 	StudentDAO studentDao;
 	
@@ -45,24 +48,46 @@ public class MatchesController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/pairs", method=RequestMethod.POST)
-	public String generateMatches(@PathVariable String userName, @PathVariable int classId) {
+	public String generateMatches(@PathVariable String userName, @PathVariable int classId, @RequestParam("weekOfMatch") int week, @RequestParam("size") int size, @RequestParam("countOfMatch") int countOfMatches, ModelMap map) {
 		List<Student> studentsToMatch = studentDao.getStudentsbyClassId(classId);
 		studentsToId(studentsToMatch);
 		Collections.shuffle(studentsToMatch, new Random());
 		Matches shuffledMatches = new Matches();
-		for(int i = 0; i < studentsToMatch.size(); i++) {
-			if(shuffledMatches.getSize() == 2) {
+		List<Matches> listOfMatches = new ArrayList<>();
+		shuffledMatches.setWeek(week);
+		shuffledMatches.setSize(size);
+		shuffledMatches.setCount(countOfMatches);
+//		for(int i = 1; i < studentsToMatch.size(); i++) {
+//			if(shuffledMatches.getSize() == 2) {
+//				shuffledMatches.setStudentId1(i);
+//				shuffledMatches.setStudentId2(i + 1);
+//			} else {
+//				shuffledMatches.setStudentId1(i);
+//				shuffledMatches.setStudentId2(i + 1);
+//				shuffledMatches.setStudentId3(i + 2);
+//			}
+		if(shuffledMatches.getSize() == 2) {
+			for(int i = 1; i < studentsToMatch.size(); i += 2) {
 				shuffledMatches.setStudentId1(i);
 				shuffledMatches.setStudentId2(i + 1);
-			} else {
+				matchesDao.compareMatches(shuffledMatches);
+				listOfMatches.add(shuffledMatches);
+			}
+		} else {
+			for(int i = 1; i < studentsToMatch.size(); i += 3) {
 				shuffledMatches.setStudentId1(i);
 				shuffledMatches.setStudentId2(i + 1);
 				shuffledMatches.setStudentId3(i + 2);
+				matchesDao.compareMatches(shuffledMatches);
+				listOfMatches.add(shuffledMatches);
 			}
-			matchesDao.compareMatches(shuffledMatches);
-			matchesDao.viewMatches(shuffledMatches);
+//			matchesDao.compareMatches(shuffledMatches);
+//			listOfMatches.add(shuffledMatches);
+			
 		}
-		return "redirect:/users/{userName}/{classId}/pairs/accept";
+		map.addAttribute("newMatches", listOfMatches);
+
+		return "acceptMatches";
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/pairs/accept", method=RequestMethod.GET)

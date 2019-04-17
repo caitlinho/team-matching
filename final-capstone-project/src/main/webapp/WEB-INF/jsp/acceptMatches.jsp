@@ -12,21 +12,22 @@
 			<th>Week</th>
 			<th>Team Members</th>
 		</tr>
-		<c:forEach var="team" items="${forEachVariable}">
+		<c:forEach var="team" items="${newMatches}">
 			<tr>
 				<td>${InstructorClass.name}</td>
 				<td>${team.week}</td>
-				<td>${team.NAMES}</td>
+				<td>${team.studentId1}</td>
+				<td>${team.studentId2}</td>
 			</tr>
 		</c:forEach>
 	</table>
 	
-	<c:url var="regenerateMatchesURL" value="/users/{userName}/{classId}/pairs" />
+	<c:url var="regenerateMatchesURL" value="/users/${userName}/${classId}/pairs" />
 	<form action="${regenerateMatchesURL}" method="POST">
 		<button type="submit" name="regenerateMatchesSubmit">Re-Match</button>
 	</form>
 	
-	<c:url var="acceptMatchesURL" value="/users/{userName}/{classId}/pairs/accept" />
+	<c:url var="acceptMatchesURL" value="/users/${userName}/${classId}/pairs/accept" />
 	<form action="${acceptMatchesURL}" method="POST">
 		<button type="submit" name="acceptMatchesSubmit">Accept</button>
 	</form>
