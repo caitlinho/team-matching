@@ -1,7 +1,5 @@
 package com.techelevator.model;
 
-import java.util.List;
-
 public class RandomGenerator {
 	
 	private int numberOfGroup;

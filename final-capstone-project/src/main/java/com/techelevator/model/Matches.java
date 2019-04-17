@@ -1,8 +1,5 @@
 package com.techelevator.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Matches {
 
 	private int matchId;
