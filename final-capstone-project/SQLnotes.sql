@@ -159,8 +159,31 @@ CREATE TABLE student_match_ex (match_id int not null, student_id int not null);
 INSERT INTO match_ex (match_id, student_id_1, student_id_2, week, size, count_of_matches) 
 VALUES (1, 13, 14, 1, 2, 1) RETURNING match_id;
 
-SELECT match_ex.match_id, student.name, student.name, size, week, count_of_matches FROM match_ex 
-JOIN student ON student.student_id = match_ex.student_id_1 WHERE match_id = 1;
+SELECT match_ex.match_id, 
+        (SELECT name FROM student WHERE student_id = ?), 
+        (SELECT name FROM student JOIN match_ex ON student.student_id = match_ex.student_id_2 WHERE student_id = ?), 
+         size, 
+         week, 
+         count_of_matches 
+FROM match_ex 
+JOIN student ON student.student_id = match_ex.student_id_1 WHERE (student_id_1 = ?) OR student_id_2 = ?
 
+SELECT s1.name, s2.name, m.week, m.count_of_matches
+FROM match_ex m 
+JOIN student s1 ON m.student_id_1 = s1.student_id
+JOIN student s2 ON m.student_id_2 = s2.student_id
+WHERE student_id_1 = 13
+ 
+SELECT c.name, s1.name, s2.name, m.week, m.count_of_matches, 
+FROM match_ex m 
+JOIN student s1 ON m.student_id_1 = s1.student_id
+JOIN student s2 ON m.student_id_2 = s2.student_id
+JOIN class_student cs ON cs.student_id = s1.student_id
+JOIN class c ON c.class_id = cs.class_id
+WHERE student_id_1 = 13
 
-
+"SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
+								 + "JOIN student ON student.student_id = matches.student_id_1 " 
+								 + "JOIN class_student ON class_student.student_id = student.student_id "
+								 + "JOIN class ON class.class_id = class_student.class_id " 
+								 + "WHERE class_id = ?";

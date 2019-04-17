@@ -1,0 +1,14 @@
+footer {
+  .grid(full);
+  border-top: 0.0625em solid lightgrey;
+  bottom: 0; /* !important helps maintain set height */
+  color: #000000;   
+  height: 5em; /* !important - must be < = body margin-bottom */
+  position: absolute; /* !important clears */
+  text-align: center;
+  vertical-align: center;
+  width: 65%;
+  position: fixed;
+}
+
+

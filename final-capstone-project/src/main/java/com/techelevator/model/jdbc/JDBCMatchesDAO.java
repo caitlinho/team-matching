@@ -21,6 +21,7 @@ public class JDBCMatchesDAO implements MatchesDAO{
 	
 private JdbcTemplate jdbcTemplate;
 	
+	
 	@Autowired
 	public JDBCMatchesDAO (DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
@@ -30,13 +31,25 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Matches> getMatchesbyUsername(String username) {
 		List<Matches> matchesByClass = new ArrayList<>();
-		String sqlMatchesByClass = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
-								 + "JOIN student ON student.student_id = matches.student_id_1 " 
-								 + "JOIN class_student ON class_student.student_id = student.student_id "
-								 + "JOIN class ON class.class_id = class_student.class_id " 
-								 + "JOIN app_user_class ON app_user_class.class_id = class.class_id "
-								 + "JOIN app_user ON app_user.id = app_user_class.id"
-								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
+//		String sqlMatchesByClass = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches"  
+//								 + "JOIN student ON student.student_id = matches.student_id_1 " 
+//								 + "JOIN class_student ON class_student.student_id = student.student_id "
+//								 + "JOIN class ON class.class_id = class_student.class_id " 
+//								 + "JOIN app_user_class ON app_user_class.class_id = class.class_id "
+//								 + "JOIN app_user ON app_user.id = app_user_class.id"
+//								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
+		
+		String sqlMatchesByClass = "SELECT s1.name, s2.name, match_ex.week, c.name, match_ex.count_of_matches " 
+								+ "FROM match_ex " 
+								+ "JOIN student s1 ON s1.student_id = match_ex.student_id_1 "  
+								+ "JOIN student s2 ON s2.student_id = match_ex.student_id_2 "  
+								+ "JOIN class_student cs ON s1.student_id = cs.student_id " 
+								+ "JOIN class c ON c.class_id = cs.class_id " 
+								+ "JOIN app_user_class auc ON auc.class_id = c.class_id "  
+								+ "JOIN app_user au ON au.id = auc.id " 
+								+ "WHERE au.user_name = ? " 
+								+ "ORDER BY c.name ASC";
+
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatchesByClass, username);
 		
 		while(results.next()) {
@@ -62,9 +75,10 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public List<Matches> getMatchesbyStudentId(int studentId) {
 		List<Matches> matchesByStudent = new ArrayList<>();
-		String sqlMatches = "SELECT matches.match_id, student.name, student.name, student.name, size, week, count_of_matches FROM matches "  
-						  + "JOIN student ON student.student_id = matches.student_id_1 "  
-						  + "WHERE student_id = ?";
+		String sqlMatches = "SELECT s1.name, s2.name, m.week, m.count_of_matches FROM matches m "  
+						  + "JOIN student s1 ON m.student_id_1 = s1.student_id "  
+						  + "JOIN student s2 ON m.student_id_2 = s2.student_id "  
+						  + "WHERE student_id_1 = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlMatches, studentId);
 		
 		while(results.next()) {

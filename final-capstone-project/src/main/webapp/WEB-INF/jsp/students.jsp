@@ -4,14 +4,26 @@
 <head>
 <c:url var="stylesheetHref" value="/css/students.css" />
 <link rel="stylesheet" href="${stylesheetHref}">
-<c:url var="Image" value="/img/read.jpg" />
+<c:url var="Image" value="/img/blackboard.jpg" />
 <body style="background-image: url(${Image});">
 </head>
 
 <div class="body">
 	<h1>Students</h1>
-	
+
 	<div class="navBody">
+<<<<<<< HEAD
+		<div class="studentNav">
+			<c:url var="uploadStudents"
+				value="/users/${userName}/${classId}/upload" />
+			<a href="${uploadStudents}">Upload Student List</a>
+		</div>
+		<div class="studentNav">
+			<c:url var="addStudent"
+				value="/users/${userName}/${classId}/addStudent" />
+			<a href="${addStudent}">Add Student to Class</a>
+		</div>
+=======
 	<div class="studentNav">
 		<c:url var="uploadStudents" value="/users/${userName}/${classId}/upload" />
 		<a href="${uploadStudents}">Upload Student List</a>
@@ -24,42 +36,39 @@
 		<c:url var="matchStudents" value="/users/${userName}/${classId}/pairs" />
 		<a href="${matchStudents}">Pair Students</a>
 	</div>
+>>>>>>> 5cb48b27d5d7634cff04393b4ccd5827fce9eafc
 	</div>
-	
-	
-	<table class="students">
+
+	<!-- <div> -->
+	<table class="students" border="1">
 		<tr>
 			<th>Name</th>
 			<th>Email</th>
 			<th>Comments</th>
 			<th>Active</th>
 		</tr>
-		
+		<!-- </div> -->
 
-		
-		<c:forEach var="student" items="${studentsByClass}">
-			<tr>
-				<td>
-					<c:url var="studentUrl" value="/users/${userName}/${classId}/${student.studentId}" />
-					<a href="${studentUrl}">${student.name}</a>
-				</td>
-				<td>
-					<c:out value="${student.email}" />
-				</td>
-				<td>
-					<c:out value="${student.comment}" />
-				</td>
-				<td>
-					<c:if test="${student.active} == true"> {
+		<div class="rows">
+			<c:forEach var="student" items="${studentsByClass}">
+				<tr>
+					<td><c:url var="studentUrl"
+							value="/users/${userName}/${classId}/${student.studentId}" /> <a
+						href="${studentUrl}">${student.name}</a></td>
+					<td><c:out value="${student.email}" /></td>
+					<td><c:out value="${student.comment}" /></td>
+					<td><c:if test="${student.active} == true"> {
 						<c:out value="Active" />
-					</c:if>
-					<c:if test="${student.active} == false"> {
+						</c:if> <c:if test="${student.active} == false"> {
 						<c:out value="Inactive" />
-					</c:if>
-				</td>
-			</tr>
-		</c:forEach>
+						</c:if></td>
+				</tr>
+			</c:forEach>
 	</table>
+</div>
+
+
+
 </div>
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

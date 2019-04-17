@@ -5,7 +5,7 @@
 <head>
 <c:url var="stylesheetHref" value="/css/addStudent.css" />
 <link rel="stylesheet" href="${stylesheetHref}">
-<c:url var="Image" value="/img/team.jpg" />
+<c:url var="Image" value="/img/angry.jpg" />
 <body style="background-image: url(${Image});">
 </head>
 
