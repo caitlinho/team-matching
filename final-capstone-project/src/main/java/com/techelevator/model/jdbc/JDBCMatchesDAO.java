@@ -37,10 +37,10 @@ private JdbcTemplate jdbcTemplate;
 //								 + "JOIN app_user ON app_user.id = app_user_class.id"
 //								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
 		
-		String sqlMatchesByClass = "SELECT s1.name, s2.name, match_ex.week, c.name, match_ex.count_of_matches " 
-								+ "FROM match_ex " 
-								+ "JOIN student s1 ON s1.student_id = match_ex.student_id_1 "  
-								+ "JOIN student s2 ON s2.student_id = match_ex.student_id_2 "  
+		String sqlMatchesByClass = "SELECT c.name, matches.week, s1.name, s2.name, matches.count_of_matches " 
+								+ "FROM matches " 
+								+ "JOIN student s1 ON s1.student_id = matches.student_id_1 "  
+								+ "JOIN student s2 ON s2.student_id = matches.student_id_2 "  
 								+ "JOIN class_student cs ON s1.student_id = cs.student_id " 
 								+ "JOIN class c ON c.class_id = cs.class_id " 
 								+ "JOIN app_user_class auc ON auc.class_id = c.class_id "  
