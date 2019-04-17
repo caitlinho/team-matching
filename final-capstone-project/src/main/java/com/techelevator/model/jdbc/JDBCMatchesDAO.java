@@ -39,10 +39,10 @@ private JdbcTemplate jdbcTemplate;
 //								 + "JOIN app_user ON app_user.id = app_user_class.id"
 //								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
 		
-		String sqlMatchesByClass = "SELECT s1.name, s2.name, match_ex.week, c.name, match_ex.count_of_matches " 
-								+ "FROM match_ex " 
-								+ "JOIN student s1 ON s1.student_id = match_ex.student_id_1 "  
-								+ "JOIN student s2 ON s2.student_id = match_ex.student_id_2 "  
+		String sqlMatchesByClass = "SELECT s1.name, s2.name, matches.week, c.name, matches.count_of_matches " 
+								+ "FROM matches " 
+								+ "JOIN student s1 ON s1.student_id = matches.student_id_1 "  
+								+ "JOIN student s2 ON s2.student_id = matches.student_id_2 "  
 								+ "JOIN class_student cs ON s1.student_id = cs.student_id " 
 								+ "JOIN class c ON c.class_id = cs.class_id " 
 								+ "JOIN app_user_class auc ON auc.class_id = c.class_id "  
@@ -91,9 +91,10 @@ private JdbcTemplate jdbcTemplate;
 	public boolean compareMatches(Matches match) {
 		boolean matchBoolean = true;
 		if (match.getSize() == 2) {
-			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
+			String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
 			SqlRowSet sameMatch = jdbcTemplate.queryForRowSet(sql, match.getStudentId1(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1());
-			if (sameMatch != null) {
+			boolean hasResults = sameMatch.next();
+			if (hasResults && sameMatch.getInt("count_of_matches") != 0) {
 				if (countOfMatchesForPairs(match.getStudentId1(), match.getStudentId2()) < match.getCount()) {
 					updateCountForPairs(match.getStudentId1(), match.getStudentId2());
 					matchBoolean = true;
@@ -102,12 +103,9 @@ private JdbcTemplate jdbcTemplate;
 					
 					matchBoolean = false;
 				}
-				
 			}
 			else {
 				saveMatchesForPairs(match);
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId1());
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId2());	
 			}
 		} else {
 			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) OR (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?) OR "
@@ -128,14 +126,9 @@ private JdbcTemplate jdbcTemplate;
 			}
 			else {
 				saveMatchesForTriples(match);
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId1());
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId2());	
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId3());
-			}
-			
+			}	
 		}
 		return matchBoolean;
-		
 	}
 	
 	private Matches mapRowToMatch(SqlRowSet results) {
@@ -150,24 +143,19 @@ private JdbcTemplate jdbcTemplate;
 		return match;
 	}	
 	
-	private void insertIntoMatchStudentJoinTable(int matchId, int studentId) {
-		String sql = "INSERT INTO match_student (match_id, student_id) "
-					+ "VALUES (?, ?)";
-		jdbcTemplate.update(sql, matchId, studentId);
-	}
-	
 	private void saveMatchesForPairs(Matches matches) {
-		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, week, size, count) "
-							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?) RETURNING match_id";
+		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, week, size, count_of_matches) "
+							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?) RETURNING match_id";
 		int matchId = jdbcTemplate.queryForObject(sqlAddMatches, Integer.class, matches.getStudentId1(), 
 																				matches.getStudentId2(),
 																				matches.getWeek(),
 																				matches.getSize(),
 																				matches.getCount());
+		matches.setMatchId(matchId);
 	}
 	
 	private void saveMatchesForTriples(Matches matches) {
-		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, student_id_3, week, size, count) "
+		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, student_id_3, week, size, count_of_matches) "
 							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?) RETURNING match_id";
 		int matchId = jdbcTemplate.queryForObject(sqlAddMatches, Integer.class, matches.getStudentId1(), 
 																				matches.getStudentId2(),
@@ -175,16 +163,17 @@ private JdbcTemplate jdbcTemplate;
 																				matches.getWeek(),
 																				matches.getSize(),
 																				matches.getCount());
+		matches.setMatchId(matchId);
 	}
 	
 	private int countOfMatchesForPairs(int studentId1, int studentId2) {
-		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?";
+		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
 		int results = jdbcTemplate.queryForObject(sql, Integer.class, studentId1, studentId2, studentId2, studentId1);
 		return results;
 	}
 	
 	private int countOfMatchesForTriples(int studentId1, int studentId2, int studentId3) {
-		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?";
+		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?)";
 		int results = jdbcTemplate.queryForObject(sql, Integer.class, studentId1, studentId2, studentId2, studentId1);
 		return results;
 	}

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.techelevator.model.Matches;
 import com.techelevator.model.MatchesDAO;
+import com.techelevator.model.RandomGeneratorDAO;
 import com.techelevator.model.Student;
 import com.techelevator.model.StudentDAO;
 
@@ -53,15 +54,6 @@ public class MatchesController {
 		shuffledMatches.setWeek(week);
 		shuffledMatches.setSize(size);
 		shuffledMatches.setCount(countOfMatches);
-//		for(int i = 1; i < studentsToMatch.size(); i++) {
-//			if(shuffledMatches.getSize() == 2) {
-//				shuffledMatches.setStudentId1(i);
-//				shuffledMatches.setStudentId2(i + 1);
-//			} else {
-//				shuffledMatches.setStudentId1(i);
-//				shuffledMatches.setStudentId2(i + 1);
-//				shuffledMatches.setStudentId3(i + 2);
-//			}
 		if(shuffledMatches.getSize() == 2) {
 			for(int i = 0; i < studentsToMatch.size(); i += 2) {
 				shuffledMatches = new Matches();
@@ -75,15 +67,20 @@ public class MatchesController {
 			}
 		} else {
 			for(int i = 0; i < studentsToMatch.size(); i += 3) {
+				shuffledMatches = new Matches();
+				shuffledMatches.setWeek(week);
+				shuffledMatches.setSize(size);
+				shuffledMatches.setCount(countOfMatches);
 				shuffledMatches.setStudentId1(studentsToMatch.get(i).getStudentId());
 				shuffledMatches.setStudentId2(studentsToMatch.get(i + 1).getStudentId());
 				shuffledMatches.setStudentId3(studentsToMatch.get(i + 2).getStudentId());
-				matchesDao.compareMatches(shuffledMatches);
-				listOfMatches.add(shuffledMatches);
+				if(matchesDao.compareMatches(shuffledMatches) == true) {
+					listOfMatches.add(shuffledMatches);
+				}
+				else {
+					System.out.print("Team has exceeded match limit");
+				}	
 			}
-//			matchesDao.compareMatches(shuffledMatches);
-//			listOfMatches.add(shuffledMatches);
-			
 		}
 		map.addAttribute("newMatches", listOfMatches);
 
@@ -101,15 +98,6 @@ public class MatchesController {
 		return "redirect:/users/{userName}/{classId}";
 	}
 	
-	private List<String> studentListToNameStrings(List<Student> studentList) {
-		List<String> studentNames = new ArrayList<>();
-		for(Student student : studentList) {
-			String name = student.getName();
-			studentNames.add(name);
-		}
-		return studentNames;
-	}
-	
 	private List<Integer> studentsToId(List<Student> studentListToMatch) {
 		List<Integer> studentIdList = new ArrayList<>();
 		for( Student student : studentListToMatch) {
@@ -118,6 +106,22 @@ public class MatchesController {
 		return studentIdList;		
 	}
 	
+	private List<Integer> idToStudentPairs(List<Matches> listOfMatches){
+		List<Integer> studentIdList = new ArrayList<>();
+		for(Matches matches : listOfMatches) {
+			studentIdList.add(matches.getStudentId1());
+			studentIdList.add(matches.getStudentId2());
+		}
+		return studentIdList;
+	}
 	
-
+	private List<Integer> idToStudentTriples(List<Matches> listOfMatches){
+		List<Integer> studentIdList = new ArrayList<>();
+		for(Matches matches : listOfMatches) {
+			studentIdList.add(matches.getStudentId1());
+			studentIdList.add(matches.getStudentId2());
+			studentIdList.add(matches.getStudentId3());
+		}
+		return studentIdList;
+	}
 }

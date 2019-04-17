@@ -23,7 +23,7 @@
 	</table>
 	
 	<c:url var="regenerateMatchesURL" value="/users/${userName}/${classId}/pairs" />
-	<form action="${regenerateMatchesURL}" method="POST">
+	<form action="${regenerateMatchesURL}" method="GET">
 		<button type="submit" name="regenerateMatchesSubmit">Re-Match</button>
 	</form>
 	
