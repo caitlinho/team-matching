@@ -34,17 +34,21 @@ public class StudentController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/{studentId}", method=RequestMethod.GET)
-	public String showStudentsOfOneClass(@PathVariable String userName, @PathVariable int classId, @PathVariable int studentId) {
-		
+	public String showStudentsOfOneClass(@PathVariable String userName, @PathVariable int classId) {
 		return "editStudent";
 	}
 	
-	@RequestMapping(path="/users/{userName}/{classId}", method=RequestMethod.POST)
+	@RequestMapping(path="/users/{userName}/{classId}/{studentId}", method=RequestMethod.POST)
 	public String selectingStudentToEdit(@PathVariable String userName, @PathVariable int classId, 
-														@RequestParam int studentId, @Valid @ModelAttribute("addStudent")Student student, BindingResult result) {
+														 @Valid @ModelAttribute("editStudent")Student student, BindingResult result, ModelMap map) {
+		if(result.hasErrors()) {
+			return "editStudent";
+		}
+		map.addAttribute("student", student);
 		studentDao.editStudent(student);
 		
-		return "redirect:/users/{userName}/{classId}/"+studentId;
+		
+		return "redirect:/users/{userName}/{classId}/";
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/addStudent", method=RequestMethod.GET)

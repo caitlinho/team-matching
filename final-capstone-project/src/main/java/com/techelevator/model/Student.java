@@ -6,7 +6,6 @@ public class Student {
 	private String name;
 	private String email;
 	private String comment;
-	private boolean isActive;
 	
 	public int getStudentId() {
 		return studentId;
@@ -31,12 +30,6 @@ public class Student {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
-	}
-	public boolean isActive() {
-		return isActive;
-	}
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
 	}
 
 }

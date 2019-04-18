@@ -136,6 +136,18 @@ private JdbcTemplate jdbcTemplate;
 		
 	}
 	
+	@Override
+	public void saveMatchesForPairs(Matches matches) {
+		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, week, size, count) "
+							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?) RETURNING match_id";
+		int matchId = jdbcTemplate.queryForObject(sqlAddMatches, Integer.class, matches.getStudentId1(), 
+																				matches.getStudentId2(),
+																				matches.getWeek(),
+																				matches.getSize(),
+																				matches.getCount());
+		matches.setMatchId(matchId);
+	}
+	
 	private Matches mapRowToMatch(SqlRowSet results) {
 		Matches match = new Matches();
 		match.setMatchId(results.getInt("match_id"));
@@ -154,17 +166,6 @@ private JdbcTemplate jdbcTemplate;
 		jdbcTemplate.update(sql, matchId, studentId);
 	}
 	
-	private void saveMatchesForPairs(Matches matches) {
-		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, week, size, count) "
-							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?) RETURNING match_id";
-		int matchId = jdbcTemplate.queryForObject(sqlAddMatches, Integer.class, matches.getStudentId1(), 
-																				matches.getStudentId2(),
-																				matches.getWeek(),
-																				matches.getSize(),
-																				matches.getCount());
-		matches.setMatchId(matchId);
-	}
-	
 	private void saveMatchesForTriples(Matches matches) {
 		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, student_id_3, week, size, count) "
 							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?) RETURNING match_id";
@@ -178,19 +179,19 @@ private JdbcTemplate jdbcTemplate;
 	}
 	
 	private int countOfMatchesForPairs(int studentId1, int studentId2) {
-		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?";
+		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
 		int results = jdbcTemplate.queryForObject(sql, Integer.class, studentId1, studentId2, studentId2, studentId1);
 		return results;
 	}
 	
 	private int countOfMatchesForTriples(int studentId1, int studentId2, int studentId3) {
-		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?";
+		String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?)";
 		int results = jdbcTemplate.queryForObject(sql, Integer.class, studentId1, studentId2, studentId2, studentId1);
 		return results;
 	}
 	
 	private void updateCountForPairs(int studentId1, int studentId2) {
-		String sql = "UPDATE matches SET count_of_matches = count_of_matches + 1 WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?";
+		String sql = "UPDATE matches SET count_of_matches = count_of_matches + 1 WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
 		jdbcTemplate.update(sql, studentId1, studentId2, studentId2, studentId1);
 	}
 	
