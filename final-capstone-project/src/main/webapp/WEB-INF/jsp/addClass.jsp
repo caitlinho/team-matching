@@ -17,7 +17,7 @@
 
 <div class="login">
 	<h1 >Add A Class</h1>
-	<c:url var="addClassURL" value="/users/{userName}/addClass" />
+	<c:url var="addClassURL" value="/users/${userName}/addClass" />
 	<form action="${addClassURL}" method="POST" modelAttribute="addClass">
 		<%-- <c:out value="Class Name" /> --%>
 		<i class="fas fa-chalkboard-teacher"></i>
@@ -33,6 +33,7 @@
 		</select>
 		<label for="countOfMatch">Identical Pair Limit</label>
 		<select name="countOfMatch">
+			<option value ="0">0</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>

@@ -1,6 +1,7 @@
 package com.techelevator.model.jdbc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -10,9 +11,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders.Match;
 import com.techelevator.model.Matches;
 import com.techelevator.model.MatchesDAO;
-
+import com.techelevator.model.Student;
 
 @Component
 public class JDBCMatchesDAO implements MatchesDAO{
@@ -37,7 +39,7 @@ private JdbcTemplate jdbcTemplate;
 //								 + "JOIN app_user ON app_user.id = app_user_class.id"
 //								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
 		
-		String sqlMatchesByClass = "SELECT c.name, matches.week, s1.name, s2.name, matches.count_of_matches " 
+		String sqlMatchesByClass = "SELECT s1.name, s2.name, matches.week, c.name, matches.count_of_matches " 
 								+ "FROM matches " 
 								+ "JOIN student s1 ON s1.student_id = matches.student_id_1 "  
 								+ "JOIN student s2 ON s2.student_id = matches.student_id_2 "  
@@ -89,9 +91,10 @@ private JdbcTemplate jdbcTemplate;
 	public boolean compareMatches(Matches match) {
 		boolean matchBoolean = true;
 		if (match.getSize() == 2) {
-			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
-			Matches sameMatch = jdbcTemplate.queryForObject(sql, Matches.class, match.getStudentId1(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1());
-			if (sameMatch != null) {
+			String sql = "SELECT count_of_matches FROM matches WHERE (student_id_1 = ? AND student_id_2 = ?) OR (student_id_1 = ? AND student_id_2 = ?)";
+			SqlRowSet sameMatch = jdbcTemplate.queryForRowSet(sql, match.getStudentId1(), match.getStudentId2(), match.getStudentId2(), match.getStudentId1());
+			boolean hasResults = sameMatch.next();
+			if (hasResults && sameMatch.getInt("count_of_matches") != 0) {
 				if (countOfMatchesForPairs(match.getStudentId1(), match.getStudentId2()) < match.getCount()) {
 					updateCountForPairs(match.getStudentId1(), match.getStudentId2());
 					matchBoolean = true;
@@ -100,12 +103,9 @@ private JdbcTemplate jdbcTemplate;
 					
 					matchBoolean = false;
 				}
-				
 			}
 			else {
 				saveMatchesForPairs(match);
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId1());
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId2());	
 			}
 		} else {
 			String sql = "SELECT * FROM matches WHERE (student_id_1 = ? AND student_id_2 = ? AND student_id_3 = ?) OR (student_id_1 = ? AND student_id_2 = ? student_id_3 = ?) OR "
@@ -126,14 +126,9 @@ private JdbcTemplate jdbcTemplate;
 			}
 			else {
 				saveMatchesForTriples(match);
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId1());
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId2());	
-				insertIntoMatchStudentJoinTable(match.getMatchId(), match.getStudentId3());
-			}
-			
+			}	
 		}
 		return matchBoolean;
-		
 	}
 	
 	@Override
@@ -160,14 +155,26 @@ private JdbcTemplate jdbcTemplate;
 		return match;
 	}	
 	
+<<<<<<< HEAD
 	private void insertIntoMatchStudentJoinTable(int matchId, int studentId) {
 		String sql = "INSERT INTO match_student (match_id, student_id) "
 					+ "VALUES (?, ?)";
 		jdbcTemplate.update(sql, matchId, studentId);
+=======
+	private void saveMatchesForPairs(Matches matches) {
+		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, week, size, count_of_matches) "
+							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?) RETURNING match_id";
+		int matchId = jdbcTemplate.queryForObject(sqlAddMatches, Integer.class, matches.getStudentId1(), 
+																				matches.getStudentId2(),
+																				matches.getWeek(),
+																				matches.getSize(),
+																				matches.getCount());
+		matches.setMatchId(matchId);
+>>>>>>> d3c60dc291fdc0a51687ac5572dd2fa8912d9b7a
 	}
 	
 	private void saveMatchesForTriples(Matches matches) {
-		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, student_id_3, week, size, count) "
+		String sqlAddMatches = "INSERT INTO matches (match_id, student_id_1, student_id_2, student_id_3, week, size, count_of_matches) "
 							 + "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?) RETURNING match_id";
 		int matchId = jdbcTemplate.queryForObject(sqlAddMatches, Integer.class, matches.getStudentId1(), 
 																				matches.getStudentId2(),

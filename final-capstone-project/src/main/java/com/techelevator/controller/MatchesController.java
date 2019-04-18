@@ -11,10 +11,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.techelevator.model.Matches;
 import com.techelevator.model.MatchesDAO;
+import com.techelevator.model.RandomGeneratorDAO;
 import com.techelevator.model.Student;
 import com.techelevator.model.StudentDAO;
 
@@ -24,6 +26,7 @@ public class MatchesController {
 	
 	@Autowired
 	MatchesDAO matchesDao;
+	
 	@Autowired
 	StudentDAO studentDao;
 	
@@ -42,24 +45,46 @@ public class MatchesController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/pairs", method=RequestMethod.POST)
-	public String generateMatches(@PathVariable String userName, @PathVariable int classId) {
+	public String generateMatches(@PathVariable String userName, @PathVariable int classId, @RequestParam("weekOfMatch") int week, @RequestParam("size") int size, @RequestParam("countOfMatch") int countOfMatches, ModelMap map) {
 		List<Student> studentsToMatch = studentDao.getStudentsbyClassId(classId);
 		studentsToId(studentsToMatch);
-		Collections.shuffle(studentsToMatch, new Random());
+		Collections.shuffle(studentsToMatch);
 		Matches shuffledMatches = new Matches();
-		for(int i = 0; i < studentsToMatch.size(); i++) {
-			if(shuffledMatches.getSize() == 2) {
-				shuffledMatches.setStudentId1(i);
-				shuffledMatches.setStudentId2(i + 1);
-			} else {
-				shuffledMatches.setStudentId1(i);
-				shuffledMatches.setStudentId2(i + 1);
-				shuffledMatches.setStudentId3(i + 2);
+		List<Matches> listOfMatches = new ArrayList<>();
+		shuffledMatches.setWeek(week);
+		shuffledMatches.setSize(size);
+		shuffledMatches.setCount(countOfMatches);
+		if(shuffledMatches.getSize() == 2) {
+			for(int i = 0; i < studentsToMatch.size(); i += 2) {
+				shuffledMatches = new Matches();
+				shuffledMatches.setWeek(week);
+				shuffledMatches.setSize(size);
+				shuffledMatches.setCount(countOfMatches);
+				shuffledMatches.setStudentId1(studentsToMatch.get(i).getStudentId());
+				shuffledMatches.setStudentId2(studentsToMatch.get(i + 1).getStudentId());
+				matchesDao.compareMatches(shuffledMatches);
+				listOfMatches.add(shuffledMatches);
 			}
-			matchesDao.compareMatches(shuffledMatches);
-			matchesDao.viewMatches(shuffledMatches);
+		} else {
+			for(int i = 0; i < studentsToMatch.size(); i += 3) {
+				shuffledMatches = new Matches();
+				shuffledMatches.setWeek(week);
+				shuffledMatches.setSize(size);
+				shuffledMatches.setCount(countOfMatches);
+				shuffledMatches.setStudentId1(studentsToMatch.get(i).getStudentId());
+				shuffledMatches.setStudentId2(studentsToMatch.get(i + 1).getStudentId());
+				shuffledMatches.setStudentId3(studentsToMatch.get(i + 2).getStudentId());
+				if(matchesDao.compareMatches(shuffledMatches) == true) {
+					listOfMatches.add(shuffledMatches);
+				}
+				else {
+					System.out.print("Team has exceeded match limit");
+				}	
+			}
 		}
-		return "redirect:/users/{userName}/{classId}/pairs/accept";
+		map.addAttribute("newMatches", listOfMatches);
+
+		return "acceptMatches";
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/pairs/accept", method=RequestMethod.GET)
@@ -73,15 +98,6 @@ public class MatchesController {
 		return "redirect:/users/{userName}/{classId}";
 	}
 	
-	private List<String> studentListToNameStrings(List<Student> studentList) {
-		List<String> studentNames = new ArrayList<>();
-		for(Student student : studentList) {
-			String name = student.getName();
-			studentNames.add(name);
-		}
-		return studentNames;
-	}
-	
 	private List<Integer> studentsToId(List<Student> studentListToMatch) {
 		List<Integer> studentIdList = new ArrayList<>();
 		for( Student student : studentListToMatch) {
@@ -90,6 +106,22 @@ public class MatchesController {
 		return studentIdList;		
 	}
 	
+	private List<Integer> idToStudentPairs(List<Matches> listOfMatches){
+		List<Integer> studentIdList = new ArrayList<>();
+		for(Matches matches : listOfMatches) {
+			studentIdList.add(matches.getStudentId1());
+			studentIdList.add(matches.getStudentId2());
+		}
+		return studentIdList;
+	}
 	
-
+	private List<Integer> idToStudentTriples(List<Matches> listOfMatches){
+		List<Integer> studentIdList = new ArrayList<>();
+		for(Matches matches : listOfMatches) {
+			studentIdList.add(matches.getStudentId1());
+			studentIdList.add(matches.getStudentId2());
+			studentIdList.add(matches.getStudentId3());
+		}
+		return studentIdList;
+	}
 }
