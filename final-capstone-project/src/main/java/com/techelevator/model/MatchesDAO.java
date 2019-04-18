@@ -10,5 +10,8 @@ public interface MatchesDAO {
 	boolean compareMatches(Matches match);
 	void saveMatchesForPairs(Matches matches);
 	void saveMatchesForTriples(Matches matches);
+	void insertParam(ClassParam param);
+	void updateParam(ClassParam param);
+	ClassParam getParam();
 
 }

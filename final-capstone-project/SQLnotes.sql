@@ -197,6 +197,10 @@ SELECT * FROM  class_student
 
 SELECT s1.name, s2.name, match_ex.week, c.name, match_ex.count_of_matches
 FROM match_ex 
+JOIN class_parameters param ON param.count_limit = match_ex.count_limit
+JOIN class_parameters param2 ON param2.week = match_ex.week
+JOIN class_parameters param3 ON param3.size = match_ex.
+
 JOIN student s1 ON s1.student_id = match_ex.student_id_1
 JOIN student s2 ON s2.student_id = match_ex.student_id_2
 JOIN class_student cs ON s1.student_id = cs.student_id
@@ -206,4 +210,17 @@ JOIN app_user au ON au.id = auc.id
 WHERE au.id = 1
 ORDER BY c.name ASC
 
-SELECT * from app_user_class
+ALTER TABLE match_ex
+  ADD count_limit int;
+  
+SELECT * FROM match_ex
+
+INSERT INTO match_ex (match_id, count_limit, size, week) VALUES (?,?,?,?)
+
+CREATE TABLE class_parameters
+(param_id serial primary key,
+count_limit int not null,
+size int not null,
+week int not null);
+
+INSERT INTO class_parameters (count_limit, size, week) VALUES (?, ?, ?)

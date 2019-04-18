@@ -38,6 +38,12 @@ constraint fk_matches foreign key (student_id_1) references student(student_id),
 foreign key (student_id_2) references student(student_id),
 foreign key (student_id_3) references student(student_id));
 
+CREATE TABLE class_parameters
+(param_id serial primary key,
+count_limit int not null,
+size int not null,
+week int not null);
+
 create table app_user_class
 (id int not null,
 class_id int not null,
