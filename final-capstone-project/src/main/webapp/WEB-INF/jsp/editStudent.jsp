@@ -1,20 +1,21 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:import url="/WEB-INF/jsp/navbar.jsp" />
 
 <div class="body">
 	<h1>Edit Student</h1>
-	<c:url var="editStudentURL" value="/users/${userName}/${classId}/${student.studentId}" />
-	<form action="${editStudentURL}" method="POST">
+	<c:url var="editStudentURL" value="/users/${userName}/${classId}/${studentId}" />
+	<form:form action="${editStudentURL}" method="POST" modelAttribute="student">
 		<c:set var="student" value="${student}" />
 		<label for="name">Student's Name:</label>
-		<input type="text" name="name" value="${student.name}">
+		<form:input type="text" path="name" />
 		<label for="email">Student's Email:</label>
-		<input type="text" name="email" placeholder="${student.email}">
+		<form:input type="text" path="email" />
 		<label for="comments">Comments:</label>
-		<input type="text" name="comments" placeholder="${student.comment}">
+		<form:input type="text" path="comment" />
 		<input type="submit" name="editStudentSubmit" value="Submit">
-	</form>
+	</form:form>
 	
 </div>
 

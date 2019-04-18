@@ -8,5 +8,7 @@ public interface MatchesDAO {
 	List<Matches> getMatchesbyStudentId(int studentId);
 	List<Matches> viewMatches(Matches match);
 	boolean compareMatches(Matches match);
+	void saveMatchesForPairs(Matches matches);
+	void saveMatchesForTriples(Matches matches);
 
 }
