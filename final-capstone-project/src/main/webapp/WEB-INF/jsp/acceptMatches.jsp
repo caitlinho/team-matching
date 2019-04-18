@@ -15,9 +15,8 @@
 		<c:forEach var="team" items="${newMatches}">
 			<tr>
 				<td>${InstructorClass.name}</td>
-				<td>${team.week}</td>
-				<td>${team.studentId1}</td>
-				<td>${team.studentId2}</td>
+				<td>${Matches.week}</td>
+				<td>${team}</td>
 			</tr>
 		</c:forEach>
 	</table>

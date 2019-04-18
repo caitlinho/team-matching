@@ -39,7 +39,7 @@ private JdbcTemplate jdbcTemplate;
 //								 + "JOIN app_user ON app_user.id = app_user_class.id"
 //								 + "WHERE app_user.user_name = ? ORDER BY class.name DESC";
 		
-		String sqlMatchesByClass = "SELECT s1.name, s2.name, matches.week, c.name, matches.count_of_matches " 
+		String sqlMatchesByClass = "SELECT matches.student_id_1, matches.student_id_2, s1.name, s2.name, matches.week, c.name, matches.count_of_matches " 
 								+ "FROM matches " 
 								+ "JOIN student s1 ON s1.student_id = matches.student_id_1 "  
 								+ "JOIN student s2 ON s2.student_id = matches.student_id_2 "  
@@ -133,11 +133,11 @@ private JdbcTemplate jdbcTemplate;
 	
 	private Matches mapRowToMatch(SqlRowSet results) {
 		Matches match = new Matches();
-		match.setMatchId(results.getInt("match_id"));
-		match.setSize(results.getInt("size"));
+//		match.setMatchId(results.getInt("match_id"));
+//		match.setSize(results.getInt("size"));
 		match.setStudentId1(results.getInt("student_id_1"));
 		match.setStudentId2(results.getInt("student_id_2"));
-		match.setStudentId3(results.getInt("student_id_3"));
+//		match.setStudentId3(results.getInt("student_id_3"));
 		match.setCount(results.getInt("count_of_matches"));
 		match.setWeek(results.getInt("week"));
 		return match;
