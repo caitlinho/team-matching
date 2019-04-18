@@ -20,10 +20,6 @@
 		<c:url var="addStudent" value="/users/${userName}/${classId}/addStudent" />
 		<a href="${addStudent}">Add Student to Class</a>
 	</div>
-	<div class="studentNav">
-		<c:url var="editStudent" value="/users/${userName}/${classId}/editStudent" />
-		<a href="${editStudent}">Edit Student</a>
-	</div>
 	<div class="studentNav">	
 		<c:url var="matchStudents" value="/users/${userName}/${classId}/pairs" />
 		<a href="${matchStudents}">Pair Students</a>
@@ -47,13 +43,12 @@
 						href="${studentUrl}">${student.name}</a></td>
 					<td><c:out value="${student.email}" /></td>
 					<td><c:out value="${student.comment}" /></td>
+					<td><c:url var="editStudent" value="/users/${userName}/${classId}/${student.studentId}" />
+						<a href="${editStudent}">Edit Student</a></td>
 				</tr>
 			</c:forEach>
+		</div>
 	</table>
-</div>
-
-
-
 </div>
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

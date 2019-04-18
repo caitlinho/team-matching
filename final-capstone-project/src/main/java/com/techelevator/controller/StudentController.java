@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,17 +35,18 @@ public class StudentController {
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/{studentId}", method=RequestMethod.GET)
-	public String showStudentsOfOneClass(@PathVariable String userName, @PathVariable int classId, @PathVariable int studentId) {
-		
+	public String showStudentsOfOneClassEdit(@PathVariable String userName, @PathVariable int classId, @PathVariable int studentId, ModelMap map) {
+		map.addAttribute("student", studentDao.getStudentById(studentId));
 		return "editStudent";
 	}
 	
-	@RequestMapping(path="/users/{userName}/{classId}", method=RequestMethod.POST)
+	@RequestMapping(path="/users/{userName}/{classId}/{studentId}", method=RequestMethod.POST)
 	public String selectingStudentToEdit(@PathVariable String userName, @PathVariable int classId, 
-														@RequestParam int studentId, @Valid @ModelAttribute("addStudent")Student student, BindingResult result) {
+														 @Valid @ModelAttribute("editStudent")Student student, ModelMap map) {
+		map.addAttribute("student", student);
 		studentDao.editStudent(student);
 		
-		return "redirect:/users/{userName}/{classId}/"+studentId;
+		return "redirect:/users/{userName}/{classId}/";
 	}
 	
 	@RequestMapping(path="/users/{userName}/{classId}/addStudent", method=RequestMethod.GET)

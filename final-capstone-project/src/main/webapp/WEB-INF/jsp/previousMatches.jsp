@@ -14,7 +14,7 @@
 		</tr>
 		<c:forEach var="team" items="${previousMatches}">
 			<tr>
-				<%-- td>${team.week}</td> --%>
+				<%-- <td>${team.week}</td> --%>
 				<td>${team}</td>
 			</tr>
 		</c:forEach>
