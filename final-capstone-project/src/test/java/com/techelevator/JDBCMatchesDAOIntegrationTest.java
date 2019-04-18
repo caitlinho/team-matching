@@ -1,6 +1,7 @@
 package com.techelevator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -61,17 +62,15 @@ public class JDBCMatchesDAOIntegrationTest extends DAOIntegrationTest {
  		
  		Matches matchTwo = mapRowToMatch(2, 3, 4, 5, 6, 2, 3);
  		
- 		int maxDuplication = 4;
+ 		
  		//Act
- 		 boolean matchOneAnswer = matchDAO.compareMatches(match);
- 		boolean matchTwoAnswer = matchDAO.compareMatches(matchTwo);
+// 		 boolean matchOneAnswer = matchDAO.compareMatches(match);
+ 		 assertTrue(matchDAO.compareMatches(match));
+ 		 assertTrue(matchDAO.compareMatches(match));
+ 		 assertTrue(matchDAO.compareMatches(match));
+ 		 assertFalse(matchDAO.compareMatches(match));
  		
- 		
- 		//Assert
- 		
- 		assertTrue(true, matchOneAnswer);
- 		
- 		
+
 	}
 	
 	private InstructorClasses getNewClass(int classId, String name) {
@@ -130,9 +129,11 @@ public class JDBCMatchesDAOIntegrationTest extends DAOIntegrationTest {
 		jdbcTemplate.update(sql, instructorId, classId);
 	}
 	
-	private void clearClassTable() {
-		String truncateClassTableSql = "DELETE FROM class";
-		jdbcTemplate.update(truncateClassTableSql);
+	
+	
+	private void clearMatchesTable() {
+		String truncateMatchTableSql = "DELETE FROM matches";
+		jdbcTemplate.update(truncateMatchTableSql);
 	}
 
 }
